@@ -444,7 +444,8 @@ void FLTK_FUNCTIONS::makeWidgetIcon(std::string icon_file, Fl_Widget * widget, i
 		delete(image);
 	}
 	else{return;}
-	widget->image(image2);
+	widget->image(image2->copy());
+	delete(image2);
 }
 //O
 /** set one Background element color

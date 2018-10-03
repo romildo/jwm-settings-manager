@@ -37,8 +37,8 @@ bool JWMRC::addButtonToLastTray(std::string attribute, std::string value, std::s
 		debug_out("No subelement "+subelement+" found");
 		return false;
 	}
-    node=node.child(subelement.c_str());
-    while(node.next_sibling(subelement.c_str())){
+	node=node.child(subelement.c_str());
+	while(node.next_sibling(subelement.c_str())){
 		std::string noder=node.name();
 		debug_out("getting next "+noder);
 		node=node.next_sibling(subelement.c_str());
@@ -60,7 +60,7 @@ bool JWMRC::addElement(std::string element){
 	if(element.compare("")==0){return false;}
 	pugi::xml_node node =doc.child("JWM").append_child(element.c_str());
 	if(!node){return false;}
-    return saveChangesTemp();
+	return saveChangesTemp();
 }
 bool JWMRC::addElementAndSub(std::string element, std::string subelement){
 //	if(!loadTemp()){return false;}
@@ -69,7 +69,7 @@ bool JWMRC::addElementAndSub(std::string element, std::string subelement){
 	if(subelement.compare("")==0){return false;}
 	pugi::xml_node node =doc.child("JWM").append_child(element.c_str()).append_child(subelement.c_str());
 	if(!node){return false;}
-    return saveChangesTemp();
+	return saveChangesTemp();
 }
 bool JWMRC::addElementWithText(std::string element, std::string text){
 	debug_out("addElementWithText(std::string "+ element+", std::string "+ text+")");
@@ -77,15 +77,15 @@ bool JWMRC::addElementWithText(std::string element, std::string text){
 	if(element.compare("")==0){return false;}
 	if(text.compare("")==0){return false;}
 	pugi::xml_node node =  doc.child("JWM");
-    pugi::xml_node testnode =  doc.child("JWM").child(element.c_str());
-    if(testnode){
+	pugi::xml_node testnode =  doc.child("JWM").child(element.c_str());
+	if(testnode){
 		node=node.insert_child_before(element.c_str(),testnode);
 	}
 	else{
 		node=node.append_child(element.c_str());
 	}
 	node.text().set(text.c_str());
-    return saveChangesTemp();
+	return saveChangesTemp();
 }
 bool JWMRC::addElementWithTextAfter(std::string element, std::string text){
 	debug_out("addElementWithText(std::string "+ element+", std::string "+ text+")");
@@ -93,15 +93,15 @@ bool JWMRC::addElementWithTextAfter(std::string element, std::string text){
 	if(element.compare("")==0){return false;}
 	if(text.compare("")==0){return false;}
 	pugi::xml_node node =  doc.child("JWM");
-    pugi::xml_node testnode =  doc.child("JWM").child(element.c_str());
-    if(testnode){
+	pugi::xml_node testnode =  doc.child("JWM").child(element.c_str());
+	if(testnode){
 		node=node.insert_child_after(element.c_str(),testnode);
 	}
 	else{
 		node=node.append_child(element.c_str());
 	}
 	node.text().set(text.c_str());
-    return saveChangesTemp();
+	return saveChangesTemp();
 }
 bool JWMRC::addMenuElement(unsigned int whichMenu,std::string element){
 	debug_out("bool addMenuElement(unsigned int whichMenu,std::string "+element+")");
@@ -131,15 +131,15 @@ bool JWMRC::addSubElement(unsigned int whichElement,std::string element, std::st
 	if(element.compare("")==0){return false;}
 	if(subelement.compare("")==0){return false;}
 	pugi::xml_node node =doc.child("JWM").child(element.c_str());
-    if(whichElement!=i){
+	if(whichElement!=i){
 		while(node.next_sibling(element.c_str()) && i!=whichElement){
-            node=node.next_sibling(element.c_str());
-            i++;
-        }
-    }
-    if(!node){doc.child("JWM").append_child(element.c_str());}
-    node.append_child(subelement.c_str());
-    return saveChangesTemp();
+			node=node.next_sibling(element.c_str());
+			i++;
+		}
+	}
+	if(!node){doc.child("JWM").append_child(element.c_str());}
+	node.append_child(subelement.c_str());
+	return saveChangesTemp();
 }
 bool JWMRC::addSubElementWithText(unsigned int whichElement,std::string element, std::string subelement, std::string text){
 //	if(!loadTemp()){return false;}
@@ -157,17 +157,17 @@ bool JWMRC::addSubElementWithText(unsigned int whichElement,std::string element,
 		}
 		whichElement=i;
 	}
-    if(whichElement!=i){
+	if(whichElement!=i){
 		while(node.next_sibling(element.c_str()) && i!=whichElement){
-            node=node.next_sibling(element.c_str());
-            i++;
-        }
-    }
-    if(!node){errorOUT("Empty Node");return false;}
-    node.append_child(subelement.c_str());
-    node=node.last_child();
-    node.text().set(text.c_str());
-    return saveChangesTemp();
+			node=node.next_sibling(element.c_str());
+			i++;
+		}
+	}
+	if(!node){errorOUT("Empty Node");return false;}
+	node.append_child(subelement.c_str());
+	node=node.last_child();
+	node.text().set(text.c_str());
+	return saveChangesTemp();
 }
 bool JWMRC::addSubElementWithTextandAttribute(unsigned int whichElement,std::string element, std::string subelement, std::string text,std::string attribute, std::string value){
 	unsigned int i=1;
@@ -177,18 +177,17 @@ bool JWMRC::addSubElementWithTextandAttribute(unsigned int whichElement,std::str
 	if(value.compare("")==0){return false;}
 	if(text.compare("")==0){return false;}
 	pugi::xml_node node =doc.child("JWM").child(element.c_str());
-    if(whichElement!=i){
+	if(whichElement!=i){
 		while(node.next_sibling(element.c_str()) && i!=whichElement){
-            node=node.next_sibling(element.c_str());
-            i++;
-        }
-    }
-    node.append_child(subelement.c_str());
-    node=node.last_child();
-    node.text().set(text.c_str());
-    node.append_attribute(attribute.c_str())=value.c_str();
-    return saveChangesTemp();
-
+			node=node.next_sibling(element.c_str());
+			i++;
+		}
+	}
+	node.append_child(subelement.c_str());
+	node=node.last_child();
+	node.text().set(text.c_str());
+	node.append_attribute(attribute.c_str())=value.c_str();
+	return saveChangesTemp();
 }
 bool JWMRC::addSubElementWithAttribute(unsigned int whichElement,std::string element, std::string subelement, std::string attribute, std::string value){
 	unsigned int i=1;
@@ -197,17 +196,16 @@ bool JWMRC::addSubElementWithAttribute(unsigned int whichElement,std::string ele
 	if(attribute.compare("")==0){return false;}
 	if(value.compare("")==0){return false;}
 	pugi::xml_node node =doc.child("JWM").child(element.c_str());
-    if(whichElement!=i){
+	if(whichElement!=i){
 		while(node.next_sibling(element.c_str()) && i!=whichElement){
-            node=node.next_sibling(element.c_str());
-            i++;
-        }
-    }
-    node.append_child(subelement.c_str());
-    node=node.last_child();
-    node.append_attribute(attribute.c_str())=value.c_str();
-    return saveChangesTemp();
-
+			node=node.next_sibling(element.c_str());
+			i++;
+		}
+	}
+	node.append_child(subelement.c_str());
+	node=node.last_child();
+	node.append_attribute(attribute.c_str())=value.c_str();
+	return saveChangesTemp();
 }
 bool JWMRC::addElementWithAttribute(std::string element, std::string attribute, std::string value){
 	debug_out("addElementWithAttribute(std::string "+ element+ ", std::string " +attribute + ", std::string " + value+  ")");
@@ -224,9 +222,9 @@ bool JWMRC::addElementWithAttribute(std::string element, std::string attribute, 
 		return false;
 	}
 	pugi::xml_node node =  doc.child("JWM").append_child(element.c_str());
-    node=node.last_child();
-    node.append_attribute(attribute.c_str())=value.c_str();
-    return saveChangesTemp();
+	node=node.last_child();
+	node.append_attribute(attribute.c_str())=value.c_str();
+	return saveChangesTemp();
 }
 bool JWMRC::addElementWithTextAndAttribute(std::string element, std::string attribute, std::string value,std::string text){
 	debug_out("addElementWithTextAndAttribute(std::string "+ element+ ", std::string " +attribute + ", std::string " + value+  ", std::string " + text+ ")");
@@ -235,10 +233,10 @@ bool JWMRC::addElementWithTextAndAttribute(std::string element, std::string attr
 	if(value.compare("")==0){return false;}
 	if(text.compare("")==0){return false;}
 	pugi::xml_node node =  doc.child("JWM").append_child(element.c_str());
-    //node=node.last_child();
-    node.text().set(text.c_str());
-    node.append_attribute(attribute.c_str())=value.c_str();
-    return saveChangesTemp();
+	//node=node.last_child();
+	node.text().set(text.c_str());
+	node.append_attribute(attribute.c_str())=value.c_str();
+	return saveChangesTemp();
 }
 bool JWMRC::addElementWithTextAndAttribute(std::string element, std::string attribute, std::string value, std::string attribute2, std::string value2,std::string text){
 	debug_out("addElementWithTextAndAttribute(std::string "+ element+ ", std::string " +attribute + ", std::string " + value+ ", std::string " +attribute2 + ", std::string " + value2+  ", std::string " + text+ ")");
@@ -247,23 +245,23 @@ bool JWMRC::addElementWithTextAndAttribute(std::string element, std::string attr
 	if(value.compare("")==0){return false;}
 	if(text.compare("")==0){return false;}
 	pugi::xml_node node =  doc.child("JWM").append_child(element.c_str());
-    node.text().set(text.c_str());
-    node.append_attribute(attribute.c_str())=value.c_str();
-    node.append_attribute(attribute2.c_str())=value2.c_str();
-    return saveChangesTemp();
+	node.text().set(text.c_str());
+	node.append_attribute(attribute.c_str())=value.c_str();
+	node.append_attribute(attribute2.c_str())=value2.c_str();
+	return saveChangesTemp();
 }
 bool JWMRC::addElementWithTextAndAttributes(std::string element, std::string text, std::string attribute1, std::string value1, std::string attribute2, std::string value2, std::string attribute3, std::string value3){
 	if(element.compare("")==0){return false;}
 	pugi::xml_node node =  doc.child("JWM").append_child(element.c_str());
 	if(text.compare("")!=0)
 		node.text().set(text.c_str());
-    if( (attribute1.compare("")!=0) && (value1.compare("")!=0) )
+	if( (attribute1.compare("")!=0) && (value1.compare("")!=0) )
 		node.append_attribute(attribute1.c_str())=value1.c_str();
-    if( (attribute2.compare("")!=0) && (value2.compare("")!=0) )
+	if( (attribute2.compare("")!=0) && (value2.compare("")!=0) )
 		node.append_attribute(attribute2.c_str())=value2.c_str();
 	if( (attribute3.compare("")!=0) && (value3.compare("")!=0) )
 		node.append_attribute(attribute3.c_str())=value3.c_str();
-    return saveChangesTemp();
+	return saveChangesTemp();
 }
 bool JWMRC::addElementWithSubAndText(std::string element, std::string subelement, std::string text){
 //	if(!loadTemp()){return false;}
@@ -271,9 +269,9 @@ bool JWMRC::addElementWithSubAndText(std::string element, std::string subelement
 	if(element.compare("")==0){return false;}
 	if(subelement.compare("")==0){return false;}
 	if(text.compare("")==0){return false;}
-    pugi::xml_node node =  doc.child("JWM").append_child(element.c_str()).append_child(subelement.c_str());
-    node.text().set(text.c_str());
-    return saveChangesTemp();
+	pugi::xml_node node =  doc.child("JWM").append_child(element.c_str()).append_child(subelement.c_str());
+	node.text().set(text.c_str());
+	return saveChangesTemp();
 }
 bool JWMRC::addSubNodewithText(pugi::xml_node node,std::string element,std::string text){
 	if(!node){return false;}
@@ -408,12 +406,12 @@ bool JWMRC::deleteSubElement(std::string element, int whichElement){
 	int i=1;
 	if(whichElement!=i){
 		while(node.next_sibling(element.c_str()) && i!=whichElement){
-            node=node.next_sibling(element.c_str());
-            i++;
-        }
-    }
-    baseNode.remove_child(node);
-    return saveChangesTemp();
+			node=node.next_sibling(element.c_str());
+			i++;
+		}
+	}
+	baseNode.remove_child(node);
+	return saveChangesTemp();
 }
 //E
 bool JWMRC::elementTextExists(std::string element, std::string text){
@@ -525,7 +523,7 @@ bool JWMRC::getMenuItems(Fl_Browser* menuElement,std::string menu,Fl_Browser* me
 			}
 		}
      
-     }
+	}
 	menuElement->redraw();
 	menuElementText->redraw();
 	return true;
@@ -546,8 +544,8 @@ bool JWMRC::getMenus(Fl_Browser* rootnode){
 			}
 		}
      
-     }
-     rootnode->redraw();
+	}
+	rootnode->redraw();
 	return retval;
 }
 bool JWMRC::getSubMenu(Fl_Browser* name, Fl_Browser* text, unsigned int whichMenu, unsigned int whichItem){
@@ -617,7 +615,7 @@ bool JWMRC::isImage(std::string filename){
 }
 bool JWMRC::isMenu(std::string rootNumber){
 	//TODO check includes (more)
-    debug_out("bool isMenu(std::string "+rootNumber+")");
+	debug_out("bool isMenu(std::string "+rootNumber+")");
 	unsigned int numOFpanels = numPanels();
 	if (numOFpanels == 0 ){return false;}
 	std::string root = "root:";
@@ -655,29 +653,30 @@ bool JWMRC::isMenu(std::string rootNumber){
 	return false;
 }
 bool JWMRC::isRootMenu(std::string rootmenu){
-    std::string thisRoot;
-    pugi::xml_node menuElement = doc.child("JWM");
-    if(!menuElement.child("RootMenu")){
+	std::string thisRoot;
+	pugi::xml_node menuElement = doc.child("JWM");
+	if(!menuElement.child("RootMenu")){
 		menuElement=checkIncludes("RootMenu");
 		if(!menuElement){return false;}
 	}
 	else{menuElement=menuElement.child("RootMenu");}
-    for(menuElement=menuElement;
-        menuElement;
-        menuElement=menuElement.next_sibling("RootMenu")){
-        thisRoot=menuElement.attribute("onroot").as_string();
-        debug_out("This root: "+thisRoot+" the one we want: "+rootmenu);
-        if(thisRoot.compare(rootmenu)==0){
-            debug_out("Found: "+thisRoot);
-            return true;
-        }
-    }
-    debug_out("Didn't find the menu");
-    return false;
+	for(menuElement=menuElement;
+		menuElement;
+		menuElement=menuElement.next_sibling("RootMenu"))
+	{
+		thisRoot=menuElement.attribute("onroot").as_string();
+		debug_out("This root: "+thisRoot+" the one we want: "+rootmenu);
+		if(thisRoot.compare(rootmenu)==0){
+			debug_out("Found: "+thisRoot);
+			return true;
+		}
+	}
+	debug_out("Didn't find the menu");
+	return false;
 }
 bool JWMRC::isSVG(std::string filename){
 	debug_out("bool isSVG(std::string "+filename+")");
-    return linuxcommon::has_file_extention_at_end(filename,".svg");
+	return linuxcommon::has_file_extention_at_end(filename,".svg");
 }
 bool JWMRC::isTrayElement(std::string element){
 	pugi::xml_node node = checkIncludes("Tray",element);
@@ -702,20 +701,20 @@ bool JWMRC::load(std::string filename){
 }
 bool JWMRC::load(std::string fileName, bool saveTemp){
 	debug_out("bool load(std::string "+fileName+", bool saveTemp)");
-    if(fileName.compare("")==0){linuxcommon::echo_error("file does not exist and cannot be loaded");return false;}
-    debug_out("load(): "+fileName);
-    if(!doc.load_file( fileName.c_str() )){
-        if(!linuxcommon::test_file(fileName.c_str())){
-            debug_out("The file: "+fileName+" was not found.");
-            return false;
-        }
-    }
-    else{
+	if(fileName.compare("")==0){linuxcommon::echo_error("file does not exist and cannot be loaded");return false;}
+	debug_out("load(): "+fileName);
+	if(!doc.load_file( fileName.c_str() )){
+		if(!linuxcommon::test_file(fileName.c_str())){
+			debug_out("The file: "+fileName+" was not found.");
+			return false;
+		}
+	}
+	else{
 		//debug_out("document loaded!");
 		setJSMItem("file",fileName);
 		if(saveTemp){return saveChangesTempOverwrite(fileName);} //save the current file as the temp file
-    }
-    return true;
+	}
+	return true;
 }
 //M
 //Used for Window 'modifyContext'
@@ -752,20 +751,20 @@ bool JWMRC::modifyElement(
 //N
 bool JWMRC::newVersionJWM(){
 	debug_out("bool newVersionJWM()");
-    const char* jwmVersion = "jwm -v | grep JWM |sed 's/ by.*//' |sed 's/JWM v//'";
+	const char* jwmVersion = "jwm -v | grep JWM |sed 's/ by.*//' |sed 's/JWM v//'";
 	std::string version = terminal(jwmVersion);
 	std::string newTagVersion = "2.3.0";
-    if(version.compare(newTagVersion)==0){return true;}
-    int newTagVersionMajor = 2, newTagVersionMinor = 3;
-    int dot1 = version.find_first_of('.');
-    int dot2 = version.rfind('.');
-    std::string major = version.substr(0,dot1);
-    std::string minor = version.substr(dot1+1,dot2);
-    int majorVersion = convert(major.c_str());
-    int minorVersion = convert(minor.c_str());
-    if (majorVersion > newTagVersionMajor){return true;}
-    if ((majorVersion == newTagVersionMajor)&&(minorVersion >= newTagVersionMinor)){return true;}
-    return false;
+	if(version.compare(newTagVersion)==0){return true;}
+	int newTagVersionMajor = 2, newTagVersionMinor = 3;
+	int dot1 = version.find_first_of('.');
+	int dot2 = version.rfind('.');
+	std::string major = version.substr(0,dot1);
+	std::string minor = version.substr(dot1+1,dot2);
+	int majorVersion = convert(major.c_str());
+	int minorVersion = convert(minor.c_str());
+	if (majorVersion > newTagVersionMajor){return true;}
+	if ((majorVersion == newTagVersionMajor)&&(minorVersion >= newTagVersionMinor)){return true;}
+	return false;
 }
 //P
 //WILL THIS be USEFUL?!?!?!?!?!?
@@ -786,19 +785,19 @@ bool JWMRC::populateFLBrowser(Fl_Browser *o, pugi::xml_node noder){
 //	if(!loadTemp()){return false;}
 	debug_out("bool populateFLBrowser(Fl_Browser *o,, pugi::xml_node noder");
 	if(!noder){return false;}
-    for (noder=noder.first_child();noder;noder=noder.next_sibling()){
-        std::string value  = noder.text().as_string();
-        if(value.compare("")!=0){
-            o->add(value.c_str());
-            debug_out("Value:"+value);
-        }
-        else{
+	for (noder=noder.first_child();noder;noder=noder.next_sibling()){
+		std::string value  = noder.text().as_string();
+		if(value.compare("")!=0){
+			o->add(value.c_str());
+			debug_out("Value:"+value);
+		}
+		else{
 			std::string val = noder.name();
 			o->add(val.c_str());
 			debug_out("Empty text using node name:"+val);
 		}
-    }
-    return true;
+	}
+	return true;
 }
 bool JWMRC::populateFLBrowser(Fl_Browser *o,std::string element){
 //	if(!loadTemp()){return false;}
@@ -808,16 +807,16 @@ bool JWMRC::populateFLBrowser(Fl_Browser *o,std::string element){
 	if(!node){node=checkIncludes(element);}
 	if(!node){return false;}
 	bool result = false;
-    for (node=doc.child("JWM").child(element.c_str());node;node=node.next_sibling(element.c_str())){
-        std::string value  = node.text().as_string();
-        if(value.compare("")!=0){
-            const char * v = value.c_str();
-            o->add(v);
-            result=true;
-        }
-        debug_out("Value:"+value);
-    }
-    return result;
+	for (node=doc.child("JWM").child(element.c_str());node;node=node.next_sibling(element.c_str())){
+		std::string value  = node.text().as_string();
+		if(value.compare("")!=0){
+			const char * v = value.c_str();
+			o->add(v);
+			result=true;
+		}
+		debug_out("Value:"+value);
+	}
+	return result;
 }
 bool JWMRC::populateFLBrowser(Fl_Browser *o,std::string element,std::string attribute, std::string attribute_value, std::string attribute2, std::string optional_attribute){
 	o->clear();
@@ -830,9 +829,9 @@ bool JWMRC::populateFLBrowser(Fl_Browser *o,std::string element,std::string attr
 	if(!node){node=checkIncludes(element);}
 	if(!node){return false;}
 	bool result = false;
-    for (node=doc.child("JWM").child(element.c_str());node;node=node.next_sibling(element.c_str())){
+	for (node=doc.child("JWM").child(element.c_str());node;node=node.next_sibling(element.c_str())){
 		std::string a1=node.attribute(attribute.c_str()).as_string();
-        if(a1.compare(attribute_value)==0){
+		if(a1.compare(attribute_value)==0){
 			std::string a2=node.attribute(attribute2.c_str()).as_string();
 			std::string value  = node.text().as_string();
 			std::string a3=node.attribute(optional_attribute.c_str()).as_string();
@@ -842,25 +841,25 @@ bool JWMRC::populateFLBrowser(Fl_Browser *o,std::string element,std::string attr
 				result=true;
 			}
 			debug_out("Value:"+value);
-        }
-    }
-    return result;
+		}
+	}
+	return result;
 }
 bool JWMRC::populateFLBrowser(Fl_Browser *o,std::string element,std::string subelement,unsigned int whichMainElement){
 //	if(!loadTemp()){return false;}
 	debug_out("bool populateFLBrowser(Fl_Browser *o,std::string "+element+",std::string "+subelement+",unsigned int whichMainElement)");
 	if(element.compare("")==0){return false;}
 	if(subelement.compare("")==0){return false;}
-    pugi::xml_node node=doc.child("JWM").child(element.c_str());
-    if(!node){node=checkIncludes(element);}
-    if(!node){return false;}
-    unsigned int i=1;
-    if(whichMainElement!=i){
+	pugi::xml_node node=doc.child("JWM").child(element.c_str());
+	if(!node){node=checkIncludes(element);}
+	if(!node){return false;}
+	unsigned int i=1;
+	if(whichMainElement!=i){
 		while(node.next_sibling(element.c_str()) && i!=whichMainElement){
-            node=node.next_sibling(element.c_str());
-            i++;
-        }
-    }
+			node=node.next_sibling(element.c_str());
+			i++;
+		}
+	}
 	for (pugi::xml_node node2=node.child(subelement.c_str());node2;node2=node2.next_sibling(subelement.c_str())){
 		std::string value  = node2.text().as_string();
 		if(value.compare("")!=0){
@@ -869,11 +868,11 @@ bool JWMRC::populateFLBrowser(Fl_Browser *o,std::string element,std::string sube
 		}
 		else{errorOUT("BLANK Text in:"+element);}
 		debug_out("Value:"+value);
-    }
-    return true;
+	}
+	return true;
 }
-bool JWMRC::populateFLBrowser2Attr(Fl_Browser *o,std::string element,std::string attribute1, std::string attribute2){
-debug_out("bool populateFLBrowser2Attr(Fl_Browser *o,std::string "+element+",std::string "+attribute1+",std::string " + attribute2+")");
+bool JWMRC::populateFLBrowser2Attr(Fl_Browser *o,std::string element,std::string attribute1, std::string attribute2, char delim){
+	debug_out("bool populateFLBrowser2Attr(Fl_Browser *o,std::string "+element+",std::string "+attribute1+",std::string " + attribute2+")");
 	if(element.compare("")==0){
 		debug_out("Element NOT specified");
 		return false;
@@ -886,9 +885,9 @@ debug_out("bool populateFLBrowser2Attr(Fl_Browser *o,std::string "+element+",std
 		debug_out("2nd Attribute NOT specified");
 		return false;
 	}
-    pugi::xml_node node=doc.child("JWM").child(element.c_str());
-    if(!node){node=checkIncludes(element);}
-    if(!node){
+	pugi::xml_node node=doc.child("JWM").child(element.c_str());
+	if(!node){node=checkIncludes(element);}
+	if(!node){
 		debug_out(element+" NOT found in document");
 		return false;
 	}
@@ -899,29 +898,29 @@ debug_out("bool populateFLBrowser2Attr(Fl_Browser *o,std::string "+element+",std
 			attr1=node2.attribute(attribute1.c_str()).as_string();
 			attr2=node2.attribute(attribute2.c_str()).as_string();
 			debug_out(attribute1+"="+attr1+"\n"+attribute2+"="+attr2+"\n"+element+" text="+value);
-			std::string browser_line=attr1+'\t'+attr2+ '\t'+value;
+			std::string browser_line=attr1+delim+attr2+ delim+value;
 			o->add(browser_line.c_str());
 		}
 		else{
 			errorOUT("BLANK Text in:"+element);
 		}
-    }
-    return true;
+	}
+	return true;
 }
 bool JWMRC::populateFLBrowserElements(Fl_Browser *o, pugi::xml_node noder){
 //	if(!loadTemp()){return false;}
 	debug_out("bool populateFLBrowser(Fl_Browser *o,, pugi::xml_node noder");
 	if(!noder){return false;}
-    for (noder=noder.first_child();noder;noder=noder.next_sibling()){
-        std::string value  = noder.name();
-        if(value.compare("")!=0){
-            const char * v = value.c_str();
-            o->add(v);
-        }
-        else{return false;}
-        debug_out("Value:"+value);
-    }
-    return true;
+	for (noder=noder.first_child();noder;noder=noder.next_sibling()){
+		std::string value  = noder.name();
+		if(value.compare("")!=0){
+			const char * v = value.c_str();
+			o->add(v);
+		}
+		else{return false;}
+		debug_out("Value:"+value);
+	}
+	return true;
 }
 //R
 bool JWMRC::removeMenu(std::string value){
@@ -946,22 +945,22 @@ bool JWMRC::saveChanges(){
 bool JWMRC::saveChanges(std::string filename, bool restart, bool reload){
 	debug_out("bool saveChanges(std::string "+filename+", bool restart, bool reload)");
 	if(filename.compare("")==0){return false;}
-    if(!doc.save_file( filename.c_str() )){
+	if(!doc.save_file( filename.c_str() )){
 		debug_out("saveChanges failed for: "+filename);
 		return false;
 	}
 	if(restart){
 		debug_out("Restart JWM");
 		if(std::system("jwm -restart")!=0){errorOUT("couldn't restart JWM");}
-    }
-    else{
+	}
+	else{
 		if(reload){
 			debug_out("Reload file");
 			return load(filename);
 		}
 		return true;
 	}
-    return false;
+	return false;
 }
 bool JWMRC::saveChangesMenu(){
 	debug_out("bool saveChangesMenu()");
@@ -969,12 +968,12 @@ bool JWMRC::saveChangesMenu(){
 	if(filename.compare("")==0){return false;}
 	filename=makeNOTtemp(filename);
 	if(filename.compare("")==0){return false;}
-    if(!doc.save_file( filename.c_str() )){
+	if(!doc.save_file( filename.c_str() )){
 		debug_out("saveChangesMenu failed for: "+filename);
 		return false;
 	}
 	if(std::system("jwm -reload")!=0){errorOUT("couldn't reload JWM menus");}
-    return load(filename);
+	return load(filename);
 }
 bool JWMRC::saveChangesTemp(){
 	debug_out("bool saveChangesTemp()");
@@ -1036,30 +1035,30 @@ bool JWMRC::setElementAttribute(std::string element, std::string attribute, std:
 	if(element.compare("")==0){return false;}
 	if(attribute.compare("")==0){return false;}
 	if(value.compare("")==0){return false;}
-    pugi::xml_node node = doc.child("JWM").child(element.c_str());
-    if(!node){node=checkIncludes(element);}
-    if(!node){node = doc.child("JWM").append_child(element.c_str());}
-    if(node){return setAttribute(node,attribute,value);}
-    return false;
+	pugi::xml_node node = doc.child("JWM").child(element.c_str());
+	if(!node){node=checkIncludes(element);}
+	if(!node){node = doc.child("JWM").append_child(element.c_str());}
+	if(node){return setAttribute(node,attribute,value);}
+	return false;
 }
 bool JWMRC::setElementAttribute(unsigned int whichElement, std::string element, std::string attribute, std::string value){
 	debug_out("bool setElementAttribute(std::string "+ element+ ", std::string " + attribute+ ", std::string "+ value+")");
 	if(element.compare("")==0){return false;}
 	if(attribute.compare("")==0){return false;}
 	if(value.compare("")==0){return false;}
-    unsigned int i=1;
-    pugi::xml_node node = doc.child("JWM").child(element.c_str());
-    if(!node){node=checkIncludes(element);}
-    if(whichElement!=i){
+	unsigned int i=1;
+	pugi::xml_node node = doc.child("JWM").child(element.c_str());
+	if(!node){node=checkIncludes(element);}
+	if(whichElement!=i){
 		while(node.next_sibling(element.c_str()) && i!=whichElement){
-            node=node.next_sibling(element.c_str());
-            i++;
-        }
-    }
-    if(!node){node=checkIncludes(whichElement,element);}
-    if(!node){node = doc.child("JWM").append_child(element.c_str());}
-    if(node){return setAttribute(node,attribute,value);}
-    return false;
+			node=node.next_sibling(element.c_str());
+			i++;
+		}
+	}
+	if(!node){node=checkIncludes(whichElement,element);}
+	if(!node){node = doc.child("JWM").append_child(element.c_str());}
+	if(node){return setAttribute(node,attribute,value);}
+	return false;
 }
 bool JWMRC::setElementAttribute(unsigned int whichElement, std::string element, std::string subelement, std::string attribute, std::string value){
 	debug_out("bool setElementAttribute(std::string "+ element+ ", std::string " + attribute+ ", std::string "+ value+")");
@@ -1067,21 +1066,21 @@ bool JWMRC::setElementAttribute(unsigned int whichElement, std::string element, 
 	if(element.compare("")==0){return false;}
 	if(attribute.compare("")==0){return false;}
 	if(value.compare("")==0){return false;}
-    unsigned int i=1;
-    pugi::xml_node node = doc.child("JWM").child(element.c_str());
-    if(!node){node=checkIncludes(element);}
-    if(whichElement!=i){
+	unsigned int i=1;
+	pugi::xml_node node = doc.child("JWM").child(element.c_str());
+	if(!node){node=checkIncludes(element);}
+	if(whichElement!=i){
 		while(node.next_sibling(element.c_str()) && i!=whichElement){
-            node=node.next_sibling(element.c_str());
-            i++;
-        }
-    }
-    if(!node){node=checkIncludes(whichElement,element);}
-    if(!node){node = doc.child("JWM").append_child(element.c_str());}
-    node=node.child(subelement.c_str());
-    if(!node){node = doc.child("JWM").child(element.c_str()).append_child(subelement.c_str());}
-    if(node){return setAttribute(node,attribute,value);}
-    return false;
+			node=node.next_sibling(element.c_str());
+			i++;
+		}
+	}
+	if(!node){node=checkIncludes(whichElement,element);}
+	if(!node){node = doc.child("JWM").append_child(element.c_str());}
+	node=node.child(subelement.c_str());
+	if(!node){node = doc.child("JWM").child(element.c_str()).append_child(subelement.c_str());}
+	if(node){return setAttribute(node,attribute,value);}
+	return false;
 }
 bool JWMRC::setElementAttribute(std::string element, std::string subelement, std::string attribute, std::string value){
 	debug_out("bool setElementAttribute(std::string "+ element+ ", std::string "+ subelement+", std::string " + attribute+ ", std::string "+ value+")");
@@ -1090,14 +1089,14 @@ bool JWMRC::setElementAttribute(std::string element, std::string subelement, std
 	if(subelement.compare("")==0){return false;}
 	if(attribute.compare("")==0){return false;}
 	if(value.compare("")==0){return false;}
-    pugi::xml_node node = doc.child("JWM").child(element.c_str());
-    if(!node){node=checkIncludes(element);}
-    if(!node){node = doc.child("JWM").append_child(element.c_str());}
-    node=node.child(subelement.c_str());
-    if(!node){node=checkIncludes(element,subelement);}
-    if(!node){node = doc.child("JWM").child(element.c_str()).append_child(subelement.c_str());}
-    if(node){return setAttribute(node,attribute,value);}
-    return false;
+	pugi::xml_node node = doc.child("JWM").child(element.c_str());
+	if(!node){node=checkIncludes(element);}
+	if(!node){node = doc.child("JWM").append_child(element.c_str());}
+	node=node.child(subelement.c_str());
+	if(!node){node=checkIncludes(element,subelement);}
+	if(!node){node = doc.child("JWM").child(element.c_str()).append_child(subelement.c_str());}
+	if(node){return setAttribute(node,attribute,value);}
+	return false;
 }
 bool JWMRC::setElementAttribute(std::string element, std::string subelement, std::string SUBsubsubelement, std::string attribute, std::string value){
 //	if(!loadTemp()){return false;}
@@ -1108,10 +1107,10 @@ bool JWMRC::setElementAttribute(std::string element, std::string subelement, std
 	if(attribute.compare("")==0){return false;}
 	if(value.compare("")==0){return false;}
 	pugi::xml_node node = doc.child("JWM").child(element.c_str()).child(subelement.c_str()).child(SUBsubsubelement.c_str());
-    if(!node){node=checkIncludes(element,subelement,SUBsubsubelement);}
-    if(!node){node = doc.child("JWM").child(element.c_str()).child(subelement.c_str()).append_child(SUBsubsubelement.c_str());}
-    if(node){return setAttribute(node,attribute,value);}
-    return false;
+	if(!node){node=checkIncludes(element,subelement,SUBsubsubelement);}
+	if(!node){node = doc.child("JWM").child(element.c_str()).child(subelement.c_str()).append_child(SUBsubsubelement.c_str());}
+	if(node){return setAttribute(node,attribute,value);}
+	return false;
 }
 bool JWMRC::setElementAttributeANDtext(std::string element, std::string attribute, std::string value,std::string text){
 	debug_out("bool setElementAttributeANDtext(std::string "+ element+", std::string " + attribute+ ", std::string "+ value+", std::string "+text+")");
@@ -1121,14 +1120,14 @@ bool JWMRC::setElementAttributeANDtext(std::string element, std::string attribut
 	if(text.compare("")==0){return false;}
 	pugi::xml_node node = doc.child("JWM").child(element.c_str());
 	if(!node){node=checkIncludes(element);}
-    if(!node){node = doc.child("JWM").append_child(element.c_str());}
-    node.attribute(attribute.c_str()).set_value(value.c_str());
-    node.text().set(text.c_str());
-    return saveChangesTemp();
+	if(!node){node = doc.child("JWM").append_child(element.c_str());}
+	node.attribute(attribute.c_str()).set_value(value.c_str());
+	node.text().set(text.c_str());
+	return saveChangesTemp();
 }
 bool JWMRC::setElementAttributeANDtext(std::string element, std::string subelement, std::string attribute, std::string value,std::string text){
 	debug_out("bool setElementAttributeANDtext(std::string "+ element+ ", std::string "+ subelement+", std::string " + attribute+ ", std::string "+ value+", std::string "+text+")");
-    return setElementAttributeANDtext(1,element,subelement,attribute,value,text);
+	return setElementAttributeANDtext(1,element,subelement,attribute,value,text);
 }
 bool JWMRC::setElementAttributeANDtext(unsigned int whichElement,std::string element, std::string subelement, std::string attribute, std::string value,std::string text){
 	debug_out("bool setElementAttributeANDtext(unsigned int whichElement,std::string "+ element+ ", std::string "+ subelement+", std::string " + attribute+ ", std::string "+ value+", std::string "+text+")");
@@ -1139,17 +1138,17 @@ bool JWMRC::setElementAttributeANDtext(unsigned int whichElement,std::string ele
 	if(text.compare("")==0){return false;}
 	unsigned int i=1;
 	pugi::xml_node node = doc.child("JWM").child(element.c_str()).child(subelement.c_str());
-    if(whichElement!=i){
+	if(whichElement!=i){
 		while(node.next_sibling(element.c_str()) && i!=whichElement){
-            node=node.next_sibling(element.c_str());
-            i++;
-        }
-    }
+			node=node.next_sibling(element.c_str());
+			i++;
+		}
+	}
 	if(!node){node=checkIncludes(element,subelement);}
-    if(!node){node = doc.child("JWM").child(element.c_str()).append_child(subelement.c_str());}
-    node.attribute(attribute.c_str()).set_value(value.c_str());
-    node.text().set(text.c_str());
-    return saveChangesTemp();
+	if(!node){node = doc.child("JWM").child(element.c_str()).append_child(subelement.c_str());}
+	node.attribute(attribute.c_str()).set_value(value.c_str());
+	node.text().set(text.c_str());
+	return saveChangesTemp();
 }
 bool JWMRC::setElementAttributeANDtext(std::string element, std::string subelement, std::string SUBsubsubelement, std::string attribute, std::string value,std::string text){
 	debug_out("bool setElementAttributeANDtext(std::string "+ element+ ", std::string "+ subelement+ ", std::string "+ SUBsubsubelement+", std::string " + attribute+ ", std::string "+ value+", std::string "+text+")");
@@ -1160,11 +1159,11 @@ bool JWMRC::setElementAttributeANDtext(std::string element, std::string subeleme
 	if(value.compare("")==0){return false;}
 	if(text.compare("")==0){return false;}
 	pugi::xml_node node = doc.child("JWM").child(element.c_str()).child(subelement.c_str()).child(SUBsubsubelement.c_str());
-    if(!node){node=checkIncludes(element,subelement,SUBsubsubelement);}
-    if(!node){node = doc.child("JWM").child(element.c_str()).child(subelement.c_str()).append_child(SUBsubsubelement.c_str());}
-    node.attribute(attribute.c_str()).set_value(value.c_str());
-    node.text().set(text.c_str());
-    return saveChangesTemp();
+	if(!node){node=checkIncludes(element,subelement,SUBsubsubelement);}
+	if(!node){node = doc.child("JWM").child(element.c_str()).child(subelement.c_str()).append_child(SUBsubsubelement.c_str());}
+	node.attribute(attribute.c_str()).set_value(value.c_str());
+	node.text().set(text.c_str());
+	return saveChangesTemp();
 }
 bool JWMRC::setElementColor(std::string element, const double* rgb){
 //	if(!loadTemp()){return false;}
@@ -1235,26 +1234,26 @@ bool JWMRC::setElementText(std::string element, std::string text){
 //	if(!loadTemp()){return false;}
 	if(element.compare("")==0){return false;}
 	if(text.compare("")==0){return false;}
-    pugi::xml_node node = doc.child("JWM").child(element.c_str());
-    if(!node){node=checkIncludes(element);}
-    if(!node){node = doc.child("JWM").append_child(element.c_str());}
-    node.text().set(text.c_str());
-    return saveChangesTemp();
+	pugi::xml_node node = doc.child("JWM").child(element.c_str());
+	if(!node){node=checkIncludes(element);}
+	if(!node){node = doc.child("JWM").append_child(element.c_str());}
+	node.text().set(text.c_str());
+	return saveChangesTemp();
 }
 bool JWMRC::setElementText(unsigned int whichElement, std::string element, std::string subelement, std::string text){
 	pugi::xml_node node = doc.child("JWM").child(element.c_str());
 	unsigned int i=1;
-    if(whichElement!=i){
+	if(whichElement!=i){
 		while(node.next_sibling(element.c_str()) && i!=whichElement){
-            node=node.next_sibling(element.c_str());
-            i++;
-        }
-    }
-    if(!node){node=checkIncludes(whichElement,element);}
-    if(!node){node = doc.child("JWM").append_child(element.c_str());}
-    node=node.child(subelement.c_str());
-    node.text().set(text.c_str());
-    return saveChangesTemp();
+			node=node.next_sibling(element.c_str());
+			i++;
+		}
+	}
+	if(!node){node=checkIncludes(whichElement,element);}
+	if(!node){node = doc.child("JWM").append_child(element.c_str());}
+	node=node.child(subelement.c_str());
+	node.text().set(text.c_str());
+	return saveChangesTemp();
 }
 bool JWMRC::setElementText(std::string element, std::string subelement, std::string text){
 	debug_out("setElementText(std::string "+ element+ ", std::string "+ subelement+", std::string " +text + ")");
@@ -1262,16 +1261,16 @@ bool JWMRC::setElementText(std::string element, std::string subelement, std::str
 	if(element.compare("")==0){return false;}
 	if(subelement.compare("")==0){return false;}
 	if(text.compare("")==0){return false;}
-    pugi::xml_node node = doc.child("JWM").child(element.c_str()).child(subelement.c_str());
-    if(!node){node=checkIncludes(element,subelement);}
-    if(!node){
+	pugi::xml_node node = doc.child("JWM").child(element.c_str()).child(subelement.c_str());
+	if(!node){node=checkIncludes(element,subelement);}
+	if(!node){
 		node = doc.child("JWM").child(element.c_str());
 		if(!node){node=doc.child("JWM").append_child(element.c_str());}
 		node=node.child(subelement.c_str());
 		if(!node){node=doc.child("JWM").child(element.c_str()).append_child(subelement.c_str());}
 	}
-    node.text().set(text.c_str());
-    return saveChangesTemp();
+	node.text().set(text.c_str());
+	return saveChangesTemp();
 }
 bool JWMRC::setElementText(std::string element, std::string subelement, std::string SUBsubsubelement, std::string text){
 	debug_out("setElementText(std::string "+ element+ ", std::string "+ subelement+ ", std::string "+ SUBsubsubelement+", std::string " +text + ")");
@@ -1280,9 +1279,9 @@ bool JWMRC::setElementText(std::string element, std::string subelement, std::str
 	if(subelement.compare("")==0){return false;}
 	if(SUBsubsubelement.compare("")==0){return false;}
 	if(text.compare("")==0){return false;}
-    pugi::xml_node node = doc.child("JWM").child(element.c_str()).child(subelement.c_str()).child(SUBsubsubelement.c_str());
-    if(!node){node=checkIncludes(element,subelement,SUBsubsubelement);}
-    if(!node){
+	pugi::xml_node node = doc.child("JWM").child(element.c_str()).child(subelement.c_str()).child(SUBsubsubelement.c_str());
+	if(!node){node=checkIncludes(element,subelement,SUBsubsubelement);}
+	if(!node){
 		debug_out("Didn't find "+element+"->"+subelement+"->"+SUBsubsubelement+" in check Includes");
 		node = doc.child("JWM").child(element.c_str());
 		if(!node){node=doc.child("JWM").append_child(element.c_str());}
@@ -1291,8 +1290,8 @@ bool JWMRC::setElementText(std::string element, std::string subelement, std::str
 		node=node.child(SUBsubsubelement.c_str());
 		if(!node){node=doc.child("JWM").child(element.c_str()).child(subelement.c_str()).append_child(SUBsubsubelement.c_str());}
 	}
-    node.text().set(text.c_str());
-    return saveChangesTemp();
+	node.text().set(text.c_str());
+	return saveChangesTemp();
 }
 bool JWMRC::setJSMItem(std::string item, std::string value){
 	debug_out("bool setJSMItem(std::string "+item+", std::string "+value+")");
@@ -1331,8 +1330,8 @@ bool JWMRC::setLastTrayButtonAttribute(std::string attribute,std::string value){
 		debug_out("No subelement "+subelement+" found");
 		return false;
 	}
-    node=node.child(subelement.c_str());
-    while(node.next_sibling(subelement.c_str())){
+	node=node.child(subelement.c_str());
+	while(node.next_sibling(subelement.c_str())){
 		std::string noder=node.name();
 		debug_out("getting next "+noder);
 		node=node.next_sibling(subelement.c_str());
@@ -1474,50 +1473,50 @@ std::string JWMRC::getAttribute(pugi::xml_node node,std::string attribute){
 std::string JWMRC::getElementText(std::string element){
 	if(element.compare("")==0){return "";}
 	debug_out("std::string getElementText(std::string "+element +")");
-    pugi::xml_node node = doc.child("JWM").child(element.c_str());
-    std::string stringie="";
-    if(!node){node=checkIncludes(element);}
-    if(node){stringie = node.text().as_string();}
-    debug_out("result="+stringie);
-    return stringie;
+	pugi::xml_node node = doc.child("JWM").child(element.c_str());
+	std::string stringie="";
+	if(!node){node=checkIncludes(element);}
+	if(node){stringie = node.text().as_string();}
+	debug_out("result="+stringie);
+	return stringie;
 }
 std::string JWMRC::getElementText(std::string element, std::string subelement){
 	debug_out("std::string getElementText(std::string "+element +", std::string  "+subelement+")");
 	if(element.compare("")==0){return "";}
 	if(subelement.compare("")==0){return "";}
-    pugi::xml_node node = doc.child("JWM").child(element.c_str()).child(subelement.c_str());
-    std::string stringie="";
-    if(!node){node=checkIncludes(element,subelement);}
-    if(node){stringie = node.text().as_string();}
-    debug_out("result="+stringie);
-    return stringie;
+	pugi::xml_node node = doc.child("JWM").child(element.c_str()).child(subelement.c_str());
+	std::string stringie="";
+	if(!node){node=checkIncludes(element,subelement);}
+	if(node){stringie = node.text().as_string();}
+	debug_out("result="+stringie);
+	return stringie;
 }
 std::string JWMRC::getElementText(unsigned int whichElement, std::string element, std::string subelement){
 	unsigned int i=1;
-    pugi::xml_node node = doc.child("JWM").child(element.c_str());
-    if(whichElement!=i){
+	pugi::xml_node node = doc.child("JWM").child(element.c_str());
+	if(whichElement!=i){
 		while(node.next_sibling(element.c_str()) && i!=whichElement){
-            node=node.next_sibling(element.c_str());
-            i++;
-        }
-    }
-    node=node.child(subelement.c_str());
-    if(!node){return "";}
-    return node.text().as_string();
+			node=node.next_sibling(element.c_str());
+			i++;
+		}
+	}
+	node=node.child(subelement.c_str());
+	if(!node){return "";}
+	return node.text().as_string();
 }
 std::string JWMRC::getElementText(std::string element, unsigned int whichElement, std::string subelement,std::string subsub){
 	unsigned int i=1;
-    pugi::xml_node node = doc.child("JWM").child(element.c_str()).child(subelement.c_str());;
-    if(whichElement!=i){
+	pugi::xml_node node = doc.child("JWM").child(element.c_str()).child(subelement.c_str());;
+	if(whichElement!=i){
 		while(node.next_sibling(subelement.c_str()) && i!=whichElement){
-            node=node.next_sibling(subelement.c_str());
-            i++;
-        }
-    }
-    node=node.child(subsub.c_str());
-    if(!node){return "";}
-    if(i!=whichElement){return "";}
-    return node.text().as_string();
+			node=node.next_sibling(subelement.c_str());
+			i++;
+		}
+	}
+	node=node.child(subsub.c_str());
+	if(!node){return "";}
+	if(i!=whichElement){return "";}
+	return node.text().as_string();
 }
 std::string JWMRC::getElementText(std::string element, std::string subelement, std::string SUBsubsubelement){
 
@@ -1525,12 +1524,12 @@ std::string JWMRC::getElementText(std::string element, std::string subelement, s
 	if(element.compare("")==0){return "";}
 	if(subelement.compare("")==0){return "";}
 	if(SUBsubsubelement.compare("")==0){return "";}
-    pugi::xml_node node = doc.child("JWM").child(element.c_str()).child(subelement.c_str()).child(SUBsubsubelement.c_str());
-    std::string stringie="";
-    if(!node){node=checkIncludes(element,subelement,SUBsubsubelement);}
-    if(node){stringie = node.text().as_string();}
-    debug_out("result="+stringie);
-    return stringie;
+	pugi::xml_node node = doc.child("JWM").child(element.c_str()).child(subelement.c_str()).child(SUBsubsubelement.c_str());
+	std::string stringie="";
+	if(!node){node=checkIncludes(element,subelement,SUBsubsubelement);}
+	if(node){stringie = node.text().as_string();}
+	debug_out("result="+stringie);
+	return stringie;
 }
 std::string JWMRC::getElementText2Attributes(std::string element, std::string attr1, std::string attr1v, std::string attr2, std::string attr2v){
 	debug_out("std::string getElementText2Attributes(std::string "+element+", std::string "+attr1+", std::string "+attr1v+", std::string "+attr2+", std::string "+attr2v+")");
@@ -1539,7 +1538,7 @@ std::string JWMRC::getElementText2Attributes(std::string element, std::string at
 	if(attr2.compare("")==0){return "";}
 	std::string result="";
 	pugi::xml_node node = doc.child("JWM").child(element.c_str());
-    if(!node){node=checkIncludes(element);}
+	if(!node){node=checkIncludes(element);}
 	for(node=node;node;node=node.next_sibling(element.c_str())){
 		std::string a1=node.attribute(attr1.c_str()).as_string();
 		std::string a2=node.attribute(attr2.c_str()).as_string();
@@ -1556,52 +1555,52 @@ std::string JWMRC::getElementAttribute(std::string element, std::string attribut
 	debug_out("std::string getElementAttribute(std::string "+element +", std::string  "+attribute+")");
 	if(element.compare("")==0){return "";}
 	if(attribute.compare("")==0){return "";}
-    pugi::xml_node node = doc.child("JWM").child(element.c_str());
-    std::string stringie="";
-    if(!node){node=checkIncludes(element);}
-    if(node){stringie = node.attribute(attribute.c_str()).as_string();}
-    debug_out("result="+stringie);
-    return stringie;
+	pugi::xml_node node = doc.child("JWM").child(element.c_str());
+	std::string stringie="";
+	if(!node){node=checkIncludes(element);}
+	if(node){stringie = node.attribute(attribute.c_str()).as_string();}
+	debug_out("result="+stringie);
+	return stringie;
 }
 std::string JWMRC::getElementAttribute(std::string element, std::string subelement, std::string attribute){
 	debug_out("std::string getElementAttribute(std::string "+element +", std::string  "+  subelement+ ", std::string  "+attribute+")");
 	if(element.compare("")==0){return "";}
 	if(subelement.compare("")==0){return "";}
 	if(attribute.compare("")==0){return "";}
-    pugi::xml_node node = doc.child("JWM").child(element.c_str()).child(subelement.c_str());
-    std::string stringie="";
-    if(!node){node=checkIncludes(element,subelement);}
-    if(node){stringie = node.attribute(attribute.c_str()).as_string();}
-    debug_out("result="+stringie);
-    return stringie;
+	pugi::xml_node node = doc.child("JWM").child(element.c_str()).child(subelement.c_str());
+	std::string stringie="";
+	if(!node){node=checkIncludes(element,subelement);}
+	if(node){stringie = node.attribute(attribute.c_str()).as_string();}
+	debug_out("result="+stringie);
+	return stringie;
 }
 std::string JWMRC::getElementAttributeFromElementWithAttributeAndValue(std::string element, std::string attribOfEle, std::string value, std::string subelement, std::string attribute){
 	debug_out("std::string getElementAttributeFromElementWithAttributeAndValue(std::string "+element +", std::string  "+attribOfEle+", std::string  "+value +", std::string  "+  subelement+ ", std::string  "+attribute+")");
 	if(element.compare("")==0){return "";}
 	if(subelement.compare("")==0){return "";}
 	if(attribute.compare("")==0){return "";}
-    pugi::xml_node node = doc.child("JWM").find_child_by_attribute(element.c_str(),attribOfEle.c_str(),value.c_str());
-    debug_out(node.name());
+	pugi::xml_node node = doc.child("JWM").find_child_by_attribute(element.c_str(),attribOfEle.c_str(),value.c_str());
+	debug_out(node.name());
     //.child(subelement.c_str());
-    std::string stringie="";
-    if(!node){//TODO
+	std::string stringie="";
+	if(!node){//TODO
 		debug_out("TODO: fix this");
 		//node=checkIncludes(element,subelement);}
 	}
-    if(node){stringie = node.child(subelement.c_str()).attribute(attribute.c_str()).as_string();}
-    debug_out("result="+stringie);
-    return stringie;
+	if(node){stringie = node.child(subelement.c_str()).attribute(attribute.c_str()).as_string();}
+	debug_out("result="+stringie);
+	return stringie;
 }
 std::string JWMRC::getElementAttributeFromElementWithAttributeAndValueAndText(std::string element, std::string attribOfEle, std::string value, std::string subelement, std::string attribute,std::string text){
 	debug_out("std::string getElementAttributeFromElementWithAttributeAndValueAndText(std::string "+element +", std::string  "+attribOfEle+", std::string  "+value +", std::string  "+  subelement+ ", std::string  "+attribute+ ", std::string  "+text+")");
 	if(element.compare("")==0){return "";}
 	if(subelement.compare("")==0){return "";}
 	if(attribute.compare("")==0){return "";}
-    pugi::xml_node node = doc.child("JWM").find_child_by_attribute(element.c_str(),attribOfEle.c_str(),value.c_str());
-    debug_out(node.name());
+	pugi::xml_node node = doc.child("JWM").find_child_by_attribute(element.c_str(),attribOfEle.c_str(),value.c_str());
+	debug_out(node.name());
     //.child(subelement.c_str());
-    std::string stringie="";
-    if(!node){//TODO
+	std::string stringie="";
+	if(!node){//TODO
 		debug_out("TODO: fix this");
 		//node=checkIncludes(element,subelement);}
 	}
@@ -1609,8 +1608,8 @@ std::string JWMRC::getElementAttributeFromElementWithAttributeAndValueAndText(st
 		std::string tmpTXT=node.text().as_string();
 		if(tmpTXT.compare(text)==0){stringie = node.attribute(attribute.c_str()).as_string();}
 	}
-    debug_out("result="+stringie);
-    return stringie;
+	debug_out("result="+stringie);
+	return stringie;
 }
 std::string JWMRC::getElementAttribute(std::string element, std::string subelement, std::string SUBsubsubelement, std::string attribute){
 	debug_out("std::string getElementAttribute(std::string "+element +", std::string  "+  subelement+ ", std::string  "+ SUBsubsubelement+", std::string  " +attribute+")");
@@ -1618,59 +1617,59 @@ std::string JWMRC::getElementAttribute(std::string element, std::string subeleme
 	if(subelement.compare("")==0){return "";}
 	if(SUBsubsubelement.compare("")==0){return "";}
 	if(attribute.compare("")==0){return "";}
-    pugi::xml_node node = doc.child("JWM").child(element.c_str()).child(subelement.c_str()).child(SUBsubsubelement.c_str());
-    std::string stringie="";
-    if(!node){node=checkIncludes(element,subelement,SUBsubsubelement);}
-    if(node){stringie = node.attribute(attribute.c_str()).as_string();}
-    debug_out("result="+stringie);
-    return stringie;
+	pugi::xml_node node = doc.child("JWM").child(element.c_str()).child(subelement.c_str()).child(SUBsubsubelement.c_str());
+	std::string stringie="";
+	if(!node){node=checkIncludes(element,subelement,SUBsubsubelement);}
+	if(node){stringie = node.attribute(attribute.c_str()).as_string();}
+	debug_out("result="+stringie);
+	return stringie;
 }
 std::string JWMRC::getElementAttribute(unsigned int whichElement,std::string element, std::string subelement, std::string attribute){
 	unsigned int i=1;
-    pugi::xml_node node = doc.child("JWM").child(element.c_str());
-    if(whichElement!=i){
+	pugi::xml_node node = doc.child("JWM").child(element.c_str());
+	if(whichElement!=i){
 		while(node.next_sibling(element.c_str()) && i!=whichElement){
-            node=node.next_sibling(element.c_str());
-            i++;
-        }
-    }
-    if(!node){node=checkIncludes(whichElement,element);}
-    node=node.child(subelement.c_str());
+			node=node.next_sibling(element.c_str());
+			i++;
+		}
+	}
+	if(!node){node=checkIncludes(whichElement,element);}
+	node=node.child(subelement.c_str());
 	if(!node){return "";}
-    return node.attribute(attribute.c_str()).as_string();
+	return node.attribute(attribute.c_str()).as_string();
 }
 std::string JWMRC::getElementAttribute(unsigned int whichElement,std::string element, std::string attribute){
-unsigned int i=1;
-    pugi::xml_node node = doc.child("JWM").child(element.c_str());
-    if(whichElement!=i){
+	unsigned int i=1;
+	pugi::xml_node node = doc.child("JWM").child(element.c_str());
+	if(whichElement!=i){
 		while(node.next_sibling(element.c_str()) && i!=whichElement){
-            node=node.next_sibling(element.c_str());
-            i++;
-        }
-    }
-    if(!node){node=checkIncludes(whichElement,element);}
-    return node.attribute(attribute.c_str()).as_string();
+			node=node.next_sibling(element.c_str());
+			i++;
+		}
+	}
+	if(!node){node=checkIncludes(whichElement,element);}
+	return node.attribute(attribute.c_str()).as_string();
 }
 std::string JWMRC::getElementAttribute(unsigned int whichElement,std::string element,unsigned int whichItem, std::string subelement, std::string attribute){
 	unsigned int i=1;
-    pugi::xml_node node = doc.child("JWM").child(element.c_str());
-    if(whichElement!=i){
+	pugi::xml_node node = doc.child("JWM").child(element.c_str());
+	if(whichElement!=i){
 		while(node.next_sibling(element.c_str()) && i!=whichElement){
-            node=node.next_sibling(element.c_str());
-            i++;
-        }
-    }
-    if(!node){node=checkIncludes(whichElement,element);}
-    node=node.child(subelement.c_str());
-    i=1;
-    if(whichItem!=i){
+			node=node.next_sibling(element.c_str());
+			i++;
+		}
+	}
+	if(!node){node=checkIncludes(whichElement,element);}
+	node=node.child(subelement.c_str());
+	i=1;
+	if(whichItem!=i){
 		while(node.next_sibling(subelement.c_str()) && i!=whichItem){
-            node=node.next_sibling(subelement.c_str());
-            i++;
-        }
-    }
-    if(!node){return "";}
-    return node.attribute(attribute.c_str()).as_string();
+			node=node.next_sibling(subelement.c_str());
+			i++;
+		}
+	}
+	if(!node){return "";}
+	return node.attribute(attribute.c_str()).as_string();
 }
 std::string JWMRC::getEQUALvalue(std::string INTERNAL_LINE){
 	std::string subString;
@@ -1747,8 +1746,8 @@ std::string JWMRC::getLayoutThing(std::string attribute,std::string value1,std::
 			else if ((left==1)&&(fixed+right==0)){smartieAlign =value3;}
 			else{smartieAlign =value1;}
 		}
-    }
-    else{
+	}
+	else{
 		//VERTICAL
 		if(layout.compare("horizontal")==0){
 			if ((left==1)&&((right+fixed)==0)){smartieAlign ="bottom";}
@@ -1765,7 +1764,7 @@ std::string JWMRC::getLayoutThing(std::string attribute,std::string value1,std::
 			debug_out("Not vertical or horizontal??");
 			smartieAlign="fixed";
 		}
-    }
+	}
 	return smartieAlign;
 }
 std::string JWMRC::getMenuAttribute(std::string MENU, std::string attribute){
@@ -1803,9 +1802,9 @@ std::string JWMRC::getSmartHoriz(std::string layout){return getLayoutThing("hali
 std::string JWMRC::getSmartVert(std::string layout){return getLayoutThing("valign","fixed","top","bottom",layout);}
 std::string JWMRC::getSmartLayout(){
 	debug_out("std::string getSmartLayout()");
-    std::string smartiePosition ="";
-    std::string layout;
-    std::string subelement="Tray";
+	std::string smartiePosition ="";
+	std::string layout;
+	std::string subelement="Tray";
 	pugi::xml_node node=doc.child("JWM").child(subelement.c_str());
 	if(!node){node=checkIncludes(subelement.c_str());}
 	std::list<std::string> layouts;
@@ -1824,16 +1823,16 @@ std::string JWMRC::getSmartLayout(){
 		else if(layout.compare("vertical")==0)v2++;
 		else{v3++;}
 	}
-    //call horizontalORvertical to figure out which one to pick.
-    smartiePosition = horizontalORvertical(v1,v2);
-    return smartiePosition;
+	//call horizontalORvertical to figure out which one to pick.
+	smartiePosition = horizontalORvertical(v1,v2);
+	return smartiePosition;
 }
 std::string JWMRC::getTabItem(unsigned int whichOne, std::string browser_line){
 	debug_out("std::string getTabItem(unsigned int whichOne, std::string "+browser_line+")");
 	std::vector<std::string> myVec= linuxcommon::delimiter_vector_from_string(browser_line,"\t");
 	std::string result;
 	try{result = myVec.at(whichOne);}
-	catch(std::out_of_range e){return "";}
+	catch(const std::out_of_range e){return "";}
 	debug_out("Result="+result);
 	return result;
 }
@@ -1849,8 +1848,8 @@ std::string JWMRC::homePath(){
 }
 std::string JWMRC::horizontalORvertical(int horizontalValue, int verticalValue){
 	debug_out("std::string horizontalORvertical(int horizontalValue, int verticalValue)");
-    std::string horizontal = "horizontal";
-    std::string vertical= "vertical";
+	std::string horizontal = "horizontal";
+	std::string vertical= "vertical";
     /*
     if there are:
 
@@ -1865,31 +1864,31 @@ std::string JWMRC::horizontalORvertical(int horizontalValue, int verticalValue){
 
     Basically I want to preferr Horizontal, because people are used to it.
     */
-    if((horizontalValue == 0)){return horizontal;}
-    else if((horizontalValue ==1)&&(verticalValue == 0)){return horizontal;}
-    else if((horizontalValue==2) && (verticalValue == 0)){return vertical;}
-    else if((verticalValue==1) && (horizontalValue == 1)){return horizontal;}
-    else if((verticalValue==2) && (horizontalValue == 1)){return horizontal;}
-    else if((verticalValue==1) && (horizontalValue == 2)){return vertical;}
-    else {return "center";}
+	if((horizontalValue == 0)){return horizontal;}
+	else if((horizontalValue ==1)&&(verticalValue == 0)){return horizontal;}
+	else if((horizontalValue==2) && (verticalValue == 0)){return vertical;}
+	else if((verticalValue==1) && (horizontalValue == 1)){return horizontal;}
+	else if((verticalValue==2) && (horizontalValue == 1)){return horizontal;}
+	else if((verticalValue==1) && (horizontalValue == 2)){return vertical;}
+	else {return "center";}
 }
 //J
 std::string JWMRC::joinColors(const double* rgb, const double* rgb2){
 	std::string color1=colorToString(rgb);
 	std::string color;
 	if(rgb2!=NULL){
-        std::string color2 = colorToString(rgb2);
-        color = color1 + ":" + color2;
-        debug_out("std::string joinColors(const double* rgb, const double* rgb2) RETURNS "+color);
-        return color;
-    }
-    else{
+		std::string color2 = colorToString(rgb2);
+		color = color1 + ":" + color2;
+		debug_out("std::string joinColors(const double* rgb, const double* rgb2) RETURNS "+color);
+		return color;
+	}
+	else{
 		debug_out("std::string joinColors(const double* rgb, const double* rgb2) RETURNS "+color1);
 		return color1;
 	}
-    debug_out("std::string joinColors(const double* rgb, const double* rgb2) RETURNS the default... #000000");
-    //just return black, because 'Good guys wear Black' right???
-    return "#000000";
+	debug_out("std::string joinColors(const double* rgb, const double* rgb2) RETURNS the default... #000000");
+	//just return black, because 'Good guys wear Black' right???
+	return "#000000";
 }
 //M
 std::string JWMRC::makeTempName(std::string filename){
@@ -1951,22 +1950,22 @@ unsigned int JWMRC::convert(const char* num){
 }
 unsigned int JWMRC::currentPanel(){
 	debug_out("unsigned int currentPanel()");
-    std::string panel=getJSMItem("panel");
-    if(panel.compare("")==0)panel="1";
-    debug_out("unsigned int currentPanel()->"+panel);
-    return linuxcommon::convert_string_to_number(panel.c_str());
+	std::string panel=getJSMItem("panel");
+	if(panel.compare("")==0)panel="1";
+	debug_out("unsigned int currentPanel()->"+panel);
+	return linuxcommon::convert_string_to_number(panel.c_str());
 }
 //e
 unsigned int JWMRC::elementCounter(std::string element){
 	pugi::xml_node node=doc.child("JWM").child(element.c_str());
 	//TODO count includes
-    if(!node){return 0;}
-    unsigned int i=1;
+	if(!node){return 0;}
+	unsigned int i=1;
 	while(node.next_sibling(element.c_str())){
-            node=node.next_sibling(element.c_str());
-            i++;
-    }
-    return i;
+		node=node.next_sibling(element.c_str());
+		i++;
+	}
+	return i;
 }
 //f
 unsigned int JWMRC::flCOLOR(std::string color){
@@ -1974,7 +1973,7 @@ unsigned int JWMRC::flCOLOR(std::string color){
 	return linuxcommon::get_fl_color(color);
 }
 unsigned int JWMRC::flCOLOR(std::string color, unsigned int &c){
-debug_out("unsigned int flCOLOR(std::string "+color + ", unsigned int &c)");
+	debug_out("unsigned int flCOLOR(std::string "+color + ", unsigned int &c)");
 	return linuxcommon::get_fl_color(color, c);
 }
 //g
@@ -2000,22 +1999,22 @@ unsigned int JWMRC::getElementInt(std::string element){
 	debug_out("unsigned int getElementInt(std::string "+element + ")");
 	//if(!loadTemp()){return false;}
 	if(element.compare("")==0){return 0;}
-    pugi::xml_node node = doc.child("JWM").child(element.c_str());
-    unsigned int stringie=0;
-    if(!node){node=checkIncludes(element);}
-    if(node){stringie = node.text().as_uint();}
-    return stringie;
+	pugi::xml_node node = doc.child("JWM").child(element.c_str());
+	unsigned int stringie=0;
+	if(!node){node=checkIncludes(element);}
+	if(node){stringie = node.text().as_uint();}
+	return stringie;
 }
 unsigned int JWMRC::getElementInt(std::string element, std::string subelement){
 	debug_out("unsigned int getElementInt(std::string "+element + ", std::string " + subelement+ ")");
 	//if(!loadTemp()){return false;}
 	if(element.compare("")==0){return 0;}
 	if(subelement.compare("")==0){return 0;}
-    pugi::xml_node node = doc.child("JWM").child(element.c_str()).child(subelement.c_str());
-    unsigned int stringie=0;
-    if(!node){node=checkIncludes(element,subelement);}
-    if(node){stringie = node.text().as_uint();}
-    return stringie;
+	pugi::xml_node node = doc.child("JWM").child(element.c_str()).child(subelement.c_str());
+	unsigned int stringie=0;
+	if(!node){node=checkIncludes(element,subelement);}
+	if(node){stringie = node.text().as_uint();}
+	return stringie;
 }
 unsigned int JWMRC::getElementInt(std::string element, std::string subelement, std::string SUBsubsubelement){
 	//if(!loadTemp()){return false;}
@@ -2023,11 +2022,11 @@ unsigned int JWMRC::getElementInt(std::string element, std::string subelement, s
 	if(element.compare("")==0){return 0;}
 	if(subelement.compare("")==0){return 0;}
 	if(SUBsubsubelement.compare("")==0){return 0;}
-    pugi::xml_node node = doc.child("JWM").child(element.c_str()).child(subelement.c_str()).child(SUBsubsubelement.c_str());
-    unsigned int stringie=0;
-    if(!node){node=checkIncludes(element,subelement,SUBsubsubelement);}
-    if(node){stringie = node.text().as_uint();}
-    return stringie;
+	pugi::xml_node node = doc.child("JWM").child(element.c_str()).child(subelement.c_str()).child(SUBsubsubelement.c_str());
+	unsigned int stringie=0;
+	if(!node){node=checkIncludes(element,subelement,SUBsubsubelement);}
+	if(node){stringie = node.text().as_uint();}
+	return stringie;
 }
 unsigned int JWMRC::getFontColor(unsigned int c,std::string element){
 	debug_out("unsigned int getFontColor(unsigned int c,std::string "+element+")");
@@ -2217,21 +2216,21 @@ int JWMRC::addMenuAttrib(pugi::xml_node node,std::string element,std::string att
 int JWMRC::getIntAttribute(std::string element, std::string attribute){
 	if(element.compare("")==0){return 0;}
 	if(attribute.compare("")==0){return 0;}
-    pugi::xml_node node = doc.child("JWM").child(element.c_str());
-    if(!node){node=checkIncludes(element);}
-    unsigned int stringie=0;
-    if(node){stringie = node.attribute(attribute.c_str()).as_uint();}
-    return stringie;
+	pugi::xml_node node = doc.child("JWM").child(element.c_str());
+	if(!node){node=checkIncludes(element);}
+	unsigned int stringie=0;
+	if(node){stringie = node.attribute(attribute.c_str()).as_uint();}
+	return stringie;
 }
 int JWMRC::getIntAttribute(std::string element, std::string subelement, std::string attribute){
 	if(element.compare("")==0){return 0;}
 	if(attribute.compare("")==0){return 0;}
-    pugi::xml_node node = doc.child("JWM").child(element.c_str()).child(subelement.c_str());
-    if(!node){node=checkIncludes(element,subelement);}
-    unsigned int stringie=0;
-    if(node){stringie = node.attribute(attribute.c_str()).as_uint();}
-    return stringie;
-  }
+	pugi::xml_node node = doc.child("JWM").child(element.c_str()).child(subelement.c_str());
+	if(!node){node=checkIncludes(element,subelement);}
+	unsigned int stringie=0;
+	if(node){stringie = node.attribute(attribute.c_str()).as_uint();}
+	return stringie;
+}
 int JWMRC::JWMversion(){
 	std::string command="jwm -v |grep v[0-9] | sed 's/.* v//'|sed 's/ .*//'";
 	std::string result=linuxcommon::term_out(command);
@@ -2244,58 +2243,58 @@ int JWMRC::JWMversion(){
 }
 int JWMRC::newStyle(){
 	debug_out("int newStyle()");
-    const char* tray = "TrayButtonStyle";
-    const char* task = "TaskListStyle";
-    const char* pager = "PagerStyle";
-    const char* win = "WindowStyle";
-    const char* menu = "MenuStyle";
-    std::vector<std::string> styles;
-    styles.push_back(task);//0
-    styles.push_back(tray);//1
-    styles.push_back(menu);//2
-    styles.push_back(win);//3
-    styles.push_back(pager);//4
-    int lengthofStyle = 4;//# of entries above from 0
-    int i =0; //o is the starting point
-    loadTemp();
-    //check current if JWM version is >=2.3.0
-    bool newVersion = newVersionJWM();
-    int not23 = -1; //OLD
-    int two30 = 0; // version before removing traybutton/tasklist styles
-    int two3later = 1; //2.3.2 ++
-    bool testActive = false;
-    int totaltester =0;
-    for (testActive =isElement(styles[0].c_str()); i<=2;i++){
-       testActive =isElement(styles[i].c_str()); //if these exist it is 0 or -1
-       if(!testActive){
-         totaltester = 1;
-       }
-    }
-    if (totaltester == 1){return two3later;}
+	const char* tray = "TrayButtonStyle";
+	const char* task = "TaskListStyle";
+	const char* pager = "PagerStyle";
+	const char* win = "WindowStyle";
+	const char* menu = "MenuStyle";
+	std::vector<std::string> styles;
+	styles.push_back(task);//0
+	styles.push_back(tray);//1
+	styles.push_back(menu);//2
+	styles.push_back(win);//3
+	styles.push_back(pager);//4
+	int lengthofStyle = 4;//# of entries above from 0
+	int i =0; //o is the starting point
+	loadTemp();
+//check current if JWM version is >=2.3.0
+	bool newVersion = newVersionJWM();
+	int not23 = -1; //OLD
+	int two30 = 0; // version before removing traybutton/tasklist styles
+	int two3later = 1; //2.3.2 ++
+	bool testActive = false;
+	int totaltester =0;
+	for (testActive =isElement(styles[0].c_str()); i<=2;i++){
+		testActive =isElement(styles[i].c_str()); //if these exist it is 0 or -1
+		if(!testActive){
+			totaltester = 1;
+		}
+	}
+	if (totaltester == 1){return two3later;}
 
-    bool active = false;
-    bool inActive =false;
-    for (testActive =isElement(styles[0].c_str(),"Active"); i<=lengthofStyle;i++){
-        testActive=isElement(styles[i].c_str(),"Active");
-        if(testActive){active=true;}
-        //debug_out("Active "+styles[i]+" is "+testActive);
-    }
-    i =0;
-    for (bool testInactive =isElement(styles[0].c_str(),"Inactive"); i<=lengthofStyle;i++){
-        testInactive=isElement(styles[i].c_str(),"Inactive");
-        if(testInactive){inActive=true;}
-        //debug_out("Active "+styles[i]+" is "+testInactive);
-    }
-    if(active && !inActive){
-        if(!newVersion){
-            //do something to let the user know || fix it...
-            errorOUT("Something went wrong trying to find your version of JWM");
-        }
-        debug_out("New Version Support");
-        return two30;
-    }
-    debug_out("OLD Version Support");
-    return not23;
+	bool active = false;
+	bool inActive =false;
+	for (testActive =isElement(styles[0].c_str(),"Active"); i<=lengthofStyle;i++){
+		testActive=isElement(styles[i].c_str(),"Active");
+		if(testActive){active=true;}
+		//debug_out("Active "+styles[i]+" is "+testActive);
+	}
+	i = 0;
+	for (bool testInactive =isElement(styles[0].c_str(),"Inactive"); i<=lengthofStyle;i++){
+		testInactive=isElement(styles[i].c_str(),"Inactive");
+		if(testInactive){inActive=true;}
+		//debug_out("Active "+styles[i]+" is "+testInactive);
+	}
+	if(active && !inActive){
+		if(!newVersion){
+			//do something to let the user know || fix it...
+			errorOUT("Something went wrong trying to find your version of JWM");
+		}
+		debug_out("New Version Support");
+		return two30;
+	}
+	debug_out("OLD Version Support");
+	return not23;
 }
 int JWMRC::removeMenuItem(int menu, int item, int sub){
 	debug_out("int RemoveMenuItem(int menu, int item, int sub)");
@@ -2313,31 +2312,31 @@ int JWMRC::removeMenuItem(int menu, int item, int sub){
 	return 0;
 }
 int JWMRC::whichAlign(std::string align){
-    if(align.compare("top")==0 || align.compare("bottom")==0){return 1;}
-    else if(align.compare("left")==0 || align.compare("right")==0){return 2;}
-    else {return 3;}
+	if(align.compare("top")==0 || align.compare("bottom")==0){return 1;}
+	else if(align.compare("left")==0 || align.compare("right")==0){return 2;}
+	else {return 3;}
 }
 //float//////////////////////////////////////////////////////////////////
 float JWMRC::getElementFloat(std::string element){
 	//if(!loadTemp()){return false;}
 	debug_out("(std::string "+element + ")");
 	if(element.compare("")==0){return 0.0;}
-    pugi::xml_node node = doc.child("JWM").child(element.c_str());
-    float stringie=0.0;
-    if(!node){node=checkIncludes(element);}
-    if(node){stringie = node.text().as_float();}
-    return stringie;
+	pugi::xml_node node = doc.child("JWM").child(element.c_str());
+	float stringie=0.0;
+	if(!node){node=checkIncludes(element);}
+	if(node){stringie = node.text().as_float();}
+	return stringie;
 }
 float JWMRC::getElementFloat(std::string element, std::string subelement){
 	debug_out("(std::string "+element + ", std::string " + subelement+ ")");
 	//if(!loadTemp()){return false;}
 	if(element.compare("")==0){return 0.0;}
 	if(subelement.compare("")==0){return 0.0;}
-    pugi::xml_node node = doc.child("JWM").child(element.c_str()).child(subelement.c_str());
-    float stringie=0.0;
-    if(!node){node=checkIncludes(element,subelement);}
-    if(node){stringie = node.text().as_float();}
-    return stringie;
+	pugi::xml_node node = doc.child("JWM").child(element.c_str()).child(subelement.c_str());
+	float stringie=0.0;
+	if(!node){node=checkIncludes(element,subelement);}
+	if(node){stringie = node.text().as_float();}
+	return stringie;
 }
 float JWMRC::getElementFloat(std::string element, std::string subelement, std::string SUBsubsubelement){
 	debug_out("(std::string "+element + ", std::string " + subelement+ ", std::string "+SUBsubsubelement + ")");
@@ -2345,19 +2344,19 @@ float JWMRC::getElementFloat(std::string element, std::string subelement, std::s
 	if(element.compare("")==0){return 0.0;}
 	if(subelement.compare("")==0){return 0.0;}
 	if(SUBsubsubelement.compare("")==0){return 0.0;}
-    pugi::xml_node node = doc.child("JWM").child(element.c_str()).child(subelement.c_str()).child(SUBsubsubelement.c_str());
-    float stringie=0.0;
-    if(!node){node=checkIncludes(element,subelement,SUBsubsubelement);}
-    if(node){stringie = node.text().as_float();}
-    return stringie;
+	pugi::xml_node node = doc.child("JWM").child(element.c_str()).child(subelement.c_str()).child(SUBsubsubelement.c_str());
+	float stringie=0.0;
+	if(!node){node=checkIncludes(element,subelement,SUBsubsubelement);}
+	if(node){stringie = node.text().as_float();}
+	return stringie;
 }
 float JWMRC::getOpacity(std::string element){return getElementFloat(element);}
 #if 0
 const double* getBoxColor(Fl_Box*o){
     //unsigned int thisColor = Fl::get_color(o->color());
     //double intermediary=static_cast<double>(thisColor);
-    const double* thisdub = 0.0;//const_cast<const double*>(intermediary);
-    return thisdub;
+	const double* thisdub = 0.0;//const_cast<const double*>(intermediary);
+	return thisdub;
 }
 #endif
 //vector//////////////////////////////////////////////////////////////////
@@ -2365,11 +2364,11 @@ std::vector<std::string> JWMRC::AnythingVector(std::string element){
 	debug_out("std::vector<std::string> Includes()");
 	std::vector<std::string> includeVec;
 	for (pugi::xml_node node=doc.child("JWM").child(element.c_str());node;node=node.next_sibling(element.c_str())){
-        std::string value  = node.text().as_string();
-        if(value.compare("")!=0){
-            includeVec.push_back(value);
-        }
-    }
+		std::string value  = node.text().as_string();
+		if(value.compare("")!=0){
+			includeVec.push_back(value);
+		}
+	}
 	return includeVec;
 }
 std::vector<std::string> JWMRC::getActions(){
@@ -2504,8 +2503,8 @@ std::vector<std::string> JWMRC::XDGautostart(){
 std::vector<std::string> JWMRC::zoneSubdir(std::string thisDIR){
 	debug_out("std::vector<std::string> zoneSubdir(std::string "+thisDIR+")");
 	DIR *dir = NULL;
-    struct dirent *entryPointer = NULL;
-    std::vector<std::string> returnVec;
+	struct dirent *entryPointer = NULL;
+	std::vector<std::string> returnVec;
 	dir = opendir(thisDIR.c_str());
 	std::string SUBDIRNAME=thisDIR;
 	unsigned int finder =SUBDIRNAME.rfind("/");
@@ -2542,7 +2541,7 @@ std::vector<std::string> JWMRC::zoneVector(){
 	debug_out("std::vector<std::string> zoneVector()");
 	DIR *dir = NULL;
 	std::vector<std::string> returnVec;
-    struct dirent *entryPointer = NULL;
+	struct dirent *entryPointer = NULL;
 	std::string dirToOpen="/usr/share/zoneinfo/";
 	dir = opendir(dirToOpen.c_str());
 	if (dir!=NULL){
@@ -2577,7 +2576,7 @@ std::vector<std::string> JWMRC::zoneVector(){
 void JWMRC::addCursorsToBrowser(Fl_Browser *o){
 	debug_out("void addCursorsToBrowser(Fl_Browser *o)");
 	o->clear();
-    std::vector<std::string> cursors;
+	std::vector<std::string> cursors;
 	std::vector<std::string> mypaths=linuxcommon::split_paths("XDG_DATA_DIRS","/usr/share");
 	std::string home=linuxcommon::home_path();
 	if(linuxcommon::test_dir(home)){
@@ -2610,10 +2609,10 @@ void JWMRC::addCursorsToBrowser(Fl_Browser *o){
 }
 //C
 void JWMRC::cancel(bool Quit){
-  debug_out("Cancel");
-  load();
-  saveChangesTempOverwrite();
-  if(Quit)
+	debug_out("Cancel");
+	load();
+	saveChangesTempOverwrite();
+	if(Quit)
 	quit();
 }
 void JWMRC::changeElementText(std::string element,std::string text,std::string NEWTEXT){
@@ -2646,11 +2645,11 @@ void JWMRC::deletePanelItem(int whichElement){
 	int i=1;
 	if(whichElement!=i){
 		while(node.next_sibling() && i!=whichElement){
-            i++;
-            node=node.next_sibling();
-        }
-    }
-    else{
+			i++;
+			node=node.next_sibling();
+		}
+	}
+	else{
 		debug_out("The selected node is at the top, and cannot be moved up");
 		return;
 	}
@@ -2671,15 +2670,15 @@ void JWMRC::deleteShortcut(std::string program){
 	if(!node){node=checkIncludes(element);}
 	unsigned int whichElement=currentPanel();
 	unsigned int i=1;
-    if(whichElement!=i){
+	if(whichElement!=i){
 		while(node.next_sibling(element.c_str()) && i!=whichElement){
-            node=node.next_sibling(element.c_str());
-            i++;
-        }
-    }
-    std::string button="Button";
-    if(!node){node=checkIncludes(whichElement,element);}
-    for (node=node.child("TrayButton");node;node=node.next_sibling("TrayButton")){
+			node=node.next_sibling(element.c_str());
+			i++;
+		}
+	}
+	std::string button="Button";
+	if(!node){node=checkIncludes(whichElement,element);}
+	for (node=node.child("TrayButton");node;node=node.next_sibling("TrayButton")){
 		std::string add_text=node.text().as_string();
 		pugi::xml_node buttonnode=node.child(button.c_str());
 		if(buttonnode){
@@ -2718,15 +2717,15 @@ void JWMRC::getShortcuts(Fl_Browser*o){
 	if(!node){node=checkIncludes(element);}
 	unsigned int whichElement=currentPanel();
 	unsigned int i=1;
-    if(whichElement!=i){
+	if(whichElement!=i){
 		while(node.next_sibling(element.c_str()) && i!=whichElement){
-            node=node.next_sibling(element.c_str());
-            i++;
-        }
-    }
-    std::string button="Button";
-    if(!node){node=checkIncludes(whichElement,element);}
-    for (node=node.child("TrayButton");node;node=node.next_sibling("TrayButton")){
+			node=node.next_sibling(element.c_str());
+			i++;
+		}
+	}
+	std::string button="Button";
+	if(!node){node=checkIncludes(whichElement,element);}
+	for (node=node.child("TrayButton");node;node=node.next_sibling("TrayButton")){
 		std::string add_text=node.text().as_string();
 		pugi::xml_node buttonnode=node.child(button.c_str());
 		if(buttonnode){
@@ -2768,10 +2767,10 @@ void JWMRC::moveDown(int whichElement){
 	int i=1;
 	if(whichElement!=i){
 		while(node.next_sibling() && i!=whichElement){
-            i++;
-            node=node.next_sibling();
-        }
-    }
+			i++;
+			node=node.next_sibling();
+		}
+	}
 	pugi::xml_node nodeparser=node.next_sibling();
 	basenode.insert_move_after(node,nodeparser);
 	saveChangesTemp();
@@ -2785,11 +2784,11 @@ void JWMRC::moveUp(int whichElement){
 	int i=1;
 	if(whichElement!=i){
 		while(node.next_sibling() && i!=whichElement){
-            i++;
-            node=node.next_sibling();
-        }
-    }
-    else{
+			i++;
+			node=node.next_sibling();
+		}
+	}
+	else{
 		debug_out("The selected node is at the top, and cannot be moved up");
 		return;
 	}
@@ -2805,14 +2804,14 @@ void JWMRC::populateApps(Fl_Browser*o){
 	pugi::xml_node node =doc.child("JWM").child(element.c_str());
 	unsigned int whichElement=currentPanel();
 	unsigned int i=1;
-    if(whichElement!=i){
+	if(whichElement!=i){
 		while(node.next_sibling(element.c_str()) && i!=whichElement){
-            node=node.next_sibling(element.c_str());
-            i++;
-        }
-    }
-    if(!node){checkIncludes(whichElement,element);}
-    std::string RUNNINGAPPLIST=gettext("Running App List");
+			node=node.next_sibling(element.c_str());
+			i++;
+		}
+	}
+	if(!node){checkIncludes(whichElement,element);}
+	std::string RUNNINGAPPLIST=gettext("Running App List");
 	std::string INDICATORS=gettext("Indicators");
 	std::string CLOCK=gettext("Clock");
 	std::string SWALLOW=gettext("Swallow");
@@ -2820,7 +2819,7 @@ void JWMRC::populateApps(Fl_Browser*o){
 	std::string DESKSWITCH=gettext("Desktop Switcher");
 	std::string LAUNCHER=gettext("Launcher");
 	std::string SPACER=gettext("Spacer");
-    for (node=node.first_child();node;node=node.next_sibling()){
+	for (node=node.first_child();node;node=node.next_sibling()){
 		std::string text=node.name();
 		std::string add_text;
 		std::string temp=node.text().as_string();
@@ -2876,55 +2875,55 @@ void JWMRC::populateApps(Fl_Browser*o){
 void JWMRC::populateDesc(Fl_Browser *b){
   //see BELOW function to see how I generated this code
     //these are all the descriptions of the options above
-    int vernum=JWMversion();
-    if(vernum>=237){
+	int vernum=JWMversion();
+	if(vernum>=237){
 		b->add("Set the initial width for windows in this group to n (pixels).");
 		b->add("Set the initial x-coordinate for windows in this group to n. ");
 		b->add("Set the initial y-coordinate for windows in this group to n. ");
 	}
-    if(vernum>=236){
-    	b->add("Enable auto-maximization. New in v2.3.6.");
-    	b->add("Disable mod1+drag for moving/resizing windows in this group. ");
+	if(vernum>=236){
+		b->add("Enable auto-maximization. New in v2.3.6.");
+		b->add("Disable mod1+drag for moving/resizing windows in this group. ");
 	}
-    b->add("Enables the border on windows in this group.");
-    b->add("Center windows in this group upon initial placement instead of using cascaded placement.");
-    b->add("Prevent clients in this group from moving off-screen.");
-    b->add("The desktop on which windows in this group will be started.");
-    if(vernum>=234){
-    	b->add("Do not pass mouse events to the window. Instead, use the mouse to move/resize the window. New in v2.3.4.");
-    }
-    if(vernum>=235){
-        b->add("Fix the windows in this group to the current desktop. This will cause the desktop to change when the window is raised rather than the default behavior of moving the window to the current desktop. New in v2.3.5.");
-    }
+	b->add("Enables the border on windows in this group.");
+	b->add("Center windows in this group upon initial placement instead of using cascaded placement.");
+	b->add("Prevent clients in this group from moving off-screen.");
+	b->add("The desktop on which windows in this group will be started.");
+	if(vernum>=234){
+		b->add("Do not pass mouse events to the window. Instead, use the mouse to move/resize the window. New in v2.3.4.");
+	}
+	if(vernum>=235){
+		b->add("Fix the windows in this group to the current desktop. This will cause the desktop to change when the window is raised rather than the default behavior of moving the window to the current desktop. New in v2.3.5.");
+	}
 	b->add("Make windows in this group maximize horizontally by default.");
-    b->add("The icon to be used for windows in this group.");
-    b->add("Ignore the increment size hint when maximizing windows in this group.");
-    b->add("The layer on which windows in this group will be started. Valid ooptions are below, normal, and above.");
-    b->add("Make windows in this group maximized.");
-    b->add("Make windows in this group minimized.");
-    b->add("Disables the border for windows in this group.");
-    b->add("Hides the close button for windows in this group.");
-    if(vernum>=236){
-    	b->add("Disable mod1+drag for moving/resizing windows in this group. New in v2.3.6.");
+	b->add("The icon to be used for windows in this group.");
+	b->add("Ignore the increment size hint when maximizing windows in this group.");
+	b->add("The layer on which windows in this group will be started. Valid ooptions are below, normal, and above.");
+	b->add("Make windows in this group maximized.");
+	b->add("Make windows in this group minimized.");
+	b->add("Disables the border for windows in this group.");
+	b->add("Hides the close button for windows in this group.");
+	if(vernum>=236){
+		b->add("Disable mod1+drag for moving/resizing windows in this group. New in v2.3.6.");
 	}
-    b->add("Prevents windows in this group from grabbing the focus when mapped.");
-    b->add("Prevents windows in this group from being fullscreen.");
-    b->add("Causes the tray to ignore windows in this group.");
-    b->add("Disallows maximization for windows in this group.");
-    b->add("Disallows minimization for windows in this group.");
-    b->add("Prevents windows in this group from being moved.");
-    b->add("Causes the pager to ignore windows in this group.");
-    b->add("Prevents windows in this group from being resized.");
-    b->add("Disallows shading for windows in this group.");
-    b->add("Disables the title bar for windows in this group.");
-    b->add("Ignore the urgent hint for windows in this group. Without this option set, JWM will flash the border of urgent windows.");
-    b->add("Set the opacity for windows in this group. The value is a number between 0.0 and 1.0 inclusive.");
-    b->add("Ignore program-specified initial position.");
-    b->add("Make windows in this group shaded.");
-    b->add("Make windows in this group sticky.");
-    b->add("Attempt to tile windows in this group upon initial placement. If tiled placement fails, windows will fall back to cascaded (the default) or centered if specified.");
-    b->add("Enables the title bar for windows in this group.");
-    b->add("Make windows in this group maximize vertically by default.");
+	b->add("Prevents windows in this group from grabbing the focus when mapped.");
+	b->add("Prevents windows in this group from being fullscreen.");
+	b->add("Causes the tray to ignore windows in this group.");
+	b->add("Disallows maximization for windows in this group.");
+	b->add("Disallows minimization for windows in this group.");
+	b->add("Prevents windows in this group from being moved.");
+	b->add("Causes the pager to ignore windows in this group.");
+	b->add("Prevents windows in this group from being resized.");
+	b->add("Disallows shading for windows in this group.");
+	b->add("Disables the title bar for windows in this group.");
+	b->add("Ignore the urgent hint for windows in this group. Without this option set, JWM will flash the border of urgent windows.");
+	b->add("Set the opacity for windows in this group. The value is a number between 0.0 and 1.0 inclusive.");
+	b->add("Ignore program-specified initial position.");
+	b->add("Make windows in this group shaded.");
+	b->add("Make windows in this group sticky.");
+	b->add("Attempt to tile windows in this group upon initial placement. If tiled placement fails, windows will fall back to cascaded (the default) or centered if specified.");
+	b->add("Enables the title bar for windows in this group.");
+	b->add("Make windows in this group maximize vertically by default.");
 }
 void JWMRC::populateOptions(Fl_Browser *o){
       /*I generated this using
@@ -2947,56 +2946,55 @@ void JWMRC::populateOptions(Fl_Browser *o){
     // I DID delete things after : manually
     // I also added the vernum>=23X portions where the description says New in 2.3.X
     //these are all the options
-    int vernum=JWMversion();
-    if(vernum>=237){
+	int vernum=JWMversion();
+	if(vernum>=237){
 		o->add("width:");
 		o->add("x:");
 		o->add("y:");
 	}
-    if(vernum>=236){
-    	o->add("aerosnap");
-    	o->add("nodrag");
-    }
-	o->add("border");
-    o->add("centered");
-    o->add("constrain");
-    o->add("desktop:");
-    if(vernum>=234){
-    	o->add("drag");
-    }
-    if(vernum>=235){
-    	o->add("fixed");
+	if(vernum>=236){
+		o->add("aerosnap");
+		o->add("nodrag");
 	}
-    o->add("hmax");
-    o->add("icon:");
-    o->add("iignore");
-    o->add("layer:");
-    o->add("maximized");
-    o->add("minimized");
-    o->add("noborder");
-    o->add("noclose");
-    if(vernum>=236){
-    	o->add("nodrag");
-    }
+	o->add("border");
+	o->add("centered");
+	o->add("constrain");
+	o->add("desktop:");
+	if(vernum>=234){
+		o->add("drag");
+	}
+	if(vernum>=235){
+		o->add("fixed");
+	}
+	o->add("hmax");
+	o->add("icon:");
+	o->add("iignore");
+	o->add("layer:");
+	o->add("maximized");
+	o->add("minimized");
+	o->add("noborder");
+	o->add("noclose");
+	if(vernum>=236){
+		o->add("nodrag");
+	}
 	o->add("nofocus");
-    o->add("nofullscreen");
-    o->add("nolist");
-    o->add("nomax");
-    o->add("nomin");
-    o->add("nomove");
-    o->add("nopager");
-    o->add("noresize");
-    o->add("noshade");
-    o->add("notitle");
-    o->add("noturgent");
-    o->add("opacity:");
-    o->add("pignore");
-    o->add("shaded");
-    o->add("sticky");
-    o->add("tiled");
-    o->add("title");
-    o->add("vmax");
-
+	o->add("nofullscreen");
+	o->add("nolist");
+	o->add("nomax");
+	o->add("nomin");
+	o->add("nomove");
+	o->add("nopager");
+	o->add("noresize");
+	o->add("noshade");
+	o->add("notitle");
+	o->add("noturgent");
+	o->add("opacity:");
+	o->add("pignore");
+	o->add("shaded");
+	o->add("sticky");
+	o->add("tiled");
+	o->add("title");
+	o->add("vmax");
 }
 //Q
 void JWMRC::quit(){exit(0);}
@@ -3019,19 +3017,19 @@ void JWMRC::removeElement(unsigned int whichMainElement, std::string element,std
 	pugi::xml_node node =doc.child("JWM").child(element.c_str());
 	if(!node){node=checkIncludes(element);}
 	if(!node){return;}
-    if(whichMainElement!=i){
+	if(whichMainElement!=i){
 		while(node.next_sibling(element.c_str()) && i!=whichMainElement){
-            node=node.next_sibling(element.c_str());
-            i++;
-        }
-    }
+			node=node.next_sibling(element.c_str());
+			i++;
+		}
+	}
 	for (pugi::xml_node node2=node.child(subelement.c_str());node2;node2=node.next_sibling(subelement.c_str())){
 		std::string value  = node2.text().as_string();
 		if(value.compare(text)==0){
 			node.remove_child(node2);
 		}
-    }
-    if(!saveChangesTemp()){debug_out("Could not save the file");}
+	}
+	if(!saveChangesTemp()){debug_out("Could not save the file");}
 }
 void JWMRC::removeElement(unsigned int whichMainElement, std::string element){
 	unsigned int i=1;
@@ -3298,7 +3296,12 @@ pugi::xml_node JWMRC::checkIncludes(unsigned int whichElement,std::string elemen
 }
 pugi::xml_node JWMRC::checkIncludes(std::string element){
 	debug_out("std::string checkIncludes(std::string "+element+")");
-	pugi::xml_node node;
+	pugi::xml_node node = doc.child("JWM").child(element.c_str());
+	if(node)
+	{
+		debug_out("Current document has node:"+element);
+		return node;
+	}
 	if(element.compare("")==0){return node;}
 	std::vector<std::string> includeVec=Includes();
 	std::string currentInclude ="";
@@ -3427,7 +3430,7 @@ debug_out("std::string checkIncludes(std::string "+element+","+subelement+","+SU
 	return node;
 }
 pugi::xml_node JWMRC::compareNode(std::string element, std::string attribute, std::string value, std::string attribute2, std::string value2, std::string text){
-	debug_out("");
+	debug_out("2 attributes - pugi::xml_node compareNode(ELEMENT="+element+" ATTRIBUTE="+attribute+" VALUE="+value+" ATTRIBUTE2="+attribute2+" VALUE2="+value2+" TEXT="+text+")");
 	pugi::xml_node basenode =doc.child("JWM");
 	pugi::xml_node node;
 	pugi::xml_node node2;
@@ -3437,9 +3440,17 @@ pugi::xml_node JWMRC::compareNode(std::string element, std::string attribute, st
 	if(!node){return node;}
 	std::string Text1,Text2;
 	if(
-	((attribute.compare("")==0)&&(value.compare("")==0))
+	((attribute.compare("")!=0)&&(value.compare("")!=0))
 	&&((attribute2.compare("")!=0)&&(value2.compare("")!=0))
 	){
+		debug_out("BOTH attributes and values sent in");
+		for(node;node;node=node.next_sibling()){
+			std::string a1=node.attribute(attribute.c_str()).as_string();
+			if(a1.compare(value)==0){
+				std::string txt=node.text().as_string();
+						if((node)&&(txt.compare(text)==0))return node;
+			}
+		}
 		node=basenode.find_child_by_attribute(element.c_str(),attribute.c_str(),value.c_str());
 		if(node){
 			Text1=node.text().as_string();
@@ -3448,12 +3459,31 @@ pugi::xml_node JWMRC::compareNode(std::string element, std::string attribute, st
 		}
 		
 	}
-	if((attribute2.compare("")!=0)&&(value2.compare("")!=0)){
+	else if((attribute2.compare("")!=0)&&(value2.compare("")!=0)){
+		debug_out("ONLY attribute 2 sent in");
+		for(node;node;node=node.next_sibling()){
+			std::string a1=node.attribute(attribute.c_str()).as_string();
+			if(a1.compare(value)==0){
+				std::string a2=node.attribute(attribute2.c_str()).as_string();
+				if(a2.compare(value2)==0){
+					std::string txt=node.text().as_string();
+					if((node)&&(txt.compare(text)==0))return node;	
+				}
+			}
+		}
 		node=node.find_child_by_attribute(element.c_str(),attribute2.c_str(),value2.c_str());
 		Text1=node.text().as_string();
 		if((node)&&(Text1.compare(text)==0)){return node;}
 	}
-	if((attribute.compare("")!=0)&&(value.compare("")!=0)){
+	else if((attribute.compare("")!=0)&&(value.compare("")!=0)){
+		debug_out("ONLY attribute 1 sent in");
+		for(node;node;node=node.next_sibling()){
+			std::string a1=node.attribute(attribute.c_str()).as_string();
+			if(a1.compare(value)==0){
+				std::string txt=node.text().as_string();
+				if((node)&&(txt.compare(text)==0))return node;
+			}
+		}
 		node=node.find_child_by_attribute(element.c_str(),attribute.c_str(),value.c_str());
 		Text1=node.text().as_string();
 		if((node)&&(Text1.compare(text)==0)){
@@ -3461,10 +3491,11 @@ pugi::xml_node JWMRC::compareNode(std::string element, std::string attribute, st
 		}
 
 	}
+	else{debug_out("No attributes/values sent in");}
 	return node;
 }
 pugi::xml_node JWMRC::compareNode(std::string element, std::string text, std::string attribute, std::string value, std::string attribute2, std::string value2, std::string attribute3, std::string value3){
-	debug_out("pugi::xml_node compareNode(std::string "+element+", std::string "+text+", std::string "+attribute+", std::string "+value+", std::string "+attribute2+", std::string "+value2+", std::string "+attribute3+", std::string "+value3+")");
+	debug_out("3 attributes - pugi::xml_node compareNode(ELEMENT="+element+" TEXT="+text+" ATTRIBUTE="+attribute+" VALUE="+value+" ATTRIBUTE2="+attribute2+" VALUE2="+value2+" ATTRIBUTE3="+attribute3+" VALUE="+value3+")");
 	pugi::xml_node basenode =doc.child("JWM");
 	pugi::xml_node node;
 	pugi::xml_node node2;
@@ -3480,6 +3511,7 @@ pugi::xml_node JWMRC::compareNode(std::string element, std::string text, std::st
 		(attribute2.compare("")!=0) &&
 		(attribute3.compare("")!=0)
 	){
+		debug_out("Looking for 3 attributes!");
 		for(node;node;node=node.next_sibling()){
 			std::string a1=node.attribute(attribute.c_str()).as_string();
 			if(a1.compare(value)==0){
@@ -3493,6 +3525,7 @@ pugi::xml_node JWMRC::compareNode(std::string element, std::string text, std::st
 				}
 			}
 		}
+		debug_out("Nothing found....");
 	}
 	//Are we looking for two?
 	else if(
@@ -3500,6 +3533,7 @@ pugi::xml_node JWMRC::compareNode(std::string element, std::string text, std::st
 		(attribute2.compare("")!=0) &&
 		(attribute3.compare("")==0)
 	){
+		debug_out("looking for attribute 1 and 3");
 		for(node;node;node=node.next_sibling()){
 			std::string a1=node.attribute(attribute.c_str()).as_string();
 			if(a1.compare(value)==0){
@@ -3510,12 +3544,14 @@ pugi::xml_node JWMRC::compareNode(std::string element, std::string text, std::st
 				}
 			}
 		}
+		debug_out("Nothing found....");
 	}
 	else if(
 		(attribute.compare("")!=0) &&
 		(attribute2.compare("")==0) &&
 		(attribute3.compare("")==0)
 	){
+		debug_out("Looking for attribute 2 and 3");
 		for(node;node;node=node.next_sibling()){
 			std::string a1=node.attribute(attribute.c_str()).as_string();
 			if(a1.compare(value)==0){
@@ -3523,6 +3559,27 @@ pugi::xml_node JWMRC::compareNode(std::string element, std::string text, std::st
 				if((node)&&(txt.compare(text)==0))return node;
 			}
 		}
+		debug_out("Nothing found....");
+	}
+	else{
+		std::string attrib = attribute;
+		if(attrib.compare("")==0)
+			attrib = attribute2;
+		if(attrib.compare("")==0)
+			attrib = attribute3;
+		if(attrib.compare("")==0){
+			debug_out("No attributes sent in!");
+			return node;
+		}
+		debug_out("Looking for a single attribute:"+attrib);
+		for(node;node;node=node.next_sibling()){
+			std::string a1=node.attribute(attrib.c_str()).as_string();
+			if(a1.compare(value)==0){
+				std::string txt=node.text().as_string();
+				if((node)&&(txt.compare(text)==0))return node;
+			}
+		}
+		debug_out("Nothing found....");
 	}
 	return node;
 }

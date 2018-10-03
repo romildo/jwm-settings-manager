@@ -1260,6 +1260,7 @@ void KeyboardUI::cb_2_i(Fl_Button*, void*) {
   if(checkFlBrowserItem(key_browser)){
   debug_out("Configure callback");
   config_key_win()->show();
+  if(!Configure(key_browser,action_name1,current_key,current_mod1,current_mod2,current_mod3,old_action)){debug_out("Configure failed");}
 };
 }
 void KeyboardUI::cb_2(Fl_Button* o, void* v) {
@@ -1428,7 +1429,7 @@ Fl_Double_Window* KeyboardUI::config_key_win() {
     } // Fl_Menu_Button* o
     debug_out("config_key_win()->show()");
     startup(o,jsm_keyboard_xpm);
-    if(!Configure(key_browser,action_name1,current_key,current_mod1,current_mod2,current_mod3,old_action)){debug_out("Configure failed");}
+    o->wait_for_expose();
     conf_key_win->xclass("jsm-keyboard");
     conf_key_win->end();
   } // Fl_Double_Window* conf_key_win
@@ -1602,7 +1603,8 @@ Fl_Double_Window* KeyboardUI::make_window() {
         key_browser->labelfont(1);
         key_browser->align(Fl_Align(FL_ALIGN_TOP));
         static int widths[] = {50,175,105,0};o->column_widths(widths);
-        populateFLBrowser2Attr(key_browser,"Key","mask","key");
+        o->column_char(DELIM);
+        populateFLBrowser2Attr(key_browser,"Key","mask","key",DELIM);
       } // Fl_Browser* key_browser
       { Fl_Button* o = new Fl_Button(50, 260, 35, 30, gettext("-"));
         o->box(FL_FLAT_BOX);

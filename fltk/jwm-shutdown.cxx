@@ -71,7 +71,7 @@ Fl_Double_Window* shutdown::make_window() {
   LOGOUT="torios-exit || jwm -exit";
   SHUTDOWN="torios-shutdown || dbus-send --system --print-reply --dest=org.freedesktop.ConsoleKit /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Stop || systemctl poweroff";;
   RESTART="torios-reboot || dbus-send --system --print-reply --dest=org.freedesktop.ConsoleKit /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Restart|| systemctl reboot";
-  { shutdown_window = new Fl_Double_Window(242, 230, gettext("Shutdown"));
+  { Fl_Double_Window* o = shutdown_window = new Fl_Double_Window(242, 230, gettext("Shutdown"));
     shutdown_window->color(FL_DARK2);
     shutdown_window->user_data((void*)(this));
     { Fl_Button* o = shut = new Fl_Button(10, 10, 105, 75, gettext("Shutdown"));
@@ -112,6 +112,7 @@ Fl_Double_Window* shutdown::make_window() {
       can->callback((Fl_Callback*)cb_can);
     } // Fl_Button* can
     window_bg();
+    if(!make_window_above(o)){std::cerr<<"Couldn't make window work"<<std::endl;}
     shutdown_window->clear_border();
     shutdown_window->xclass("system-shutdown");
     shutdown_window->end();
@@ -141,4 +142,32 @@ void shutdown::window_bg() {
   //can->color(color3);
   //can->labelcolor(color2);
   under_mouse(shutdown_window);
+}
+
+bool shutdown::make_window_above(Fl_Window *o) {
+  Atom wmStateAbove = XInternAtom( fl_display, "_NET_WM_STATE_ABOVE", 1 );
+  if( wmStateAbove == None )
+    return false;
+  Atom wmNetWmState = XInternAtom( fl_display, "_NET_WM_STATE", 1 );
+  if( wmNetWmState == None )
+    return false;
+  
+  XClientMessageEvent xclient;
+  memset( &xclient, 0, sizeof (xclient) );
+  xclient.type = ClientMessage;
+  xclient.window = fl_xid(o);
+  xclient.message_type = wmNetWmState;
+  xclient.format = 32;
+  xclient.data.l[0] = 1;//_NET_WM_STATE_ADD;
+  xclient.data.l[1] = wmStateAbove;
+  xclient.data.l[2] = 0;
+  xclient.data.l[3] = 0;
+  xclient.data.l[4] = 0;
+  Window root = DefaultRootWindow( fl_display );
+  XSendEvent( fl_display,
+    root,
+    False,
+    SubstructureRedirectMask | SubstructureNotifyMask,
+    (XEvent *)&xclient );
+  return true;
 }

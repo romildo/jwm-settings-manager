@@ -54,12 +54,15 @@
 class JWM_Keyboard : public FLTK_FUNCTIONS
 {
 	public:
+		char DELIM;
+		std::string DELIMITER;
+		JWM_Keyboard();
 	//void
 		void addKey(std::string key, std::string shortcut);
 		void addKey(std::string keyMod, std::string key, std::string shortcut);
 		void changemod(std::string mod,Fl_Output* Aout,Fl_Output* Bout);
 		void changemod(std::string mod,Fl_Output* Aout,Fl_Output* Bout,Fl_Output* Cout);
-		void configureKey(std::string keyShortcut, std::string newmod1, std::string newmod2, std::string newmod3, std::string newkey, std::string newaction);
+		bool configureKey(std::string keyShortcut, std::string newmod1, std::string newmod2, std::string newmod3, std::string newkey, std::string newaction);
 		void Choose_Action(Fl_Input* action_name);
 		void deleteKey(std::string keyShortcut);
 		void key_event(Fl_Input* o, Fl_Output* out, Fl_Output* modder);
@@ -78,7 +81,7 @@ class JWM_Keyboard : public FLTK_FUNCTIONS
 		std::string getAction(std::string keyShortcut);
 		std::string getKey(std::string keyShortcut);
 		std::string getLayout(Fl_Input *o,std::string whichOne);
-		std::string getMod(std::string keyShortcut);
+		std::string getMod(std::string keyShortcut,unsigned int which);
 		std::string getMod1(std::string keyShortcut);
 		std::string getMod2(std::string keyShortcut);
 		std::string getMod3(std::string keyShortcut);
@@ -96,7 +99,8 @@ class JWM_Keyboard : public FLTK_FUNCTIONS
 			Fl_Output *mod3_output,
 			Fl_Output *old_value);
 		bool Configure_CB(Fl_Output* mod1_output, Fl_Output* mod2_output,Fl_Output* mod3_output, Fl_Input * keyshortcut,Fl_Input * action_name1,std::string CURRENT);
-		bool newpanel();
+		bool emptyString(std::string s);
 		bool getKeys(Fl_Browser* o);
+		bool newpanel();
 };
 #endif

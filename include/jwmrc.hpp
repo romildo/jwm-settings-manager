@@ -136,7 +136,7 @@ class JWMRC
 		bool populateFLBrowser(Fl_Browser *o, std::string element, std::string attribute, std::string attribute_value, std::string attribute2, std::string optional_attribute);
 		bool populateFLBrowser(Fl_Browser *o, std::string element, std::string subelement, unsigned int whichMainElement);
 		bool populateFLBrowserElements(Fl_Browser *o, pugi::xml_node noder);
-		bool populateFLBrowser2Attr(Fl_Browser *o, std::string element, std::string attribute1, std::string attribute2);
+		bool populateFLBrowser2Attr(Fl_Browser *o, std::string element, std::string attribute1, std::string attribute2,char delim='\t');
 	//R
 		bool removeMenu(std::string value);
 	//S

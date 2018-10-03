@@ -42,13 +42,19 @@ decl {\#include <stdlib.h>} {public global
 decl {\#include <iostream>} {public global
 } 
 
+decl {\#include <FL/x.H>} {public global
+} 
+
+decl {\#include <X11/Xlib.h>} {public global
+} 
+
 decl {\#include "../include/fltkfunctions.hpp"} {public global
 } 
 
 decl {\#include "../include/jwmrc.hpp"} {public global
 } 
 
-class shutdown {open selected : {public FLTK_FUNCTIONS}
+class shutdown {open : {public FLTK_FUNCTIONS}
 } {
   decl {std::string SUSPEND,LOGOUT,SHUTDOWN,RESTART;} {private local
   }
@@ -62,7 +68,8 @@ RESTART="torios-reboot || dbus-send --system --print-reply --dest=org.freedeskto
     Fl_Window shutdown_window {
       label Shutdown open
       xywh {351 113 242 230} type Double color 45
-      code0 {window_bg();} noborder xclass {system-shutdown} visible
+      code0 {window_bg();}
+      code1 {if(!make_window_above(o)){std::cerr<<"Couldn't make window work"<<std::endl;}} noborder xclass {system-shutdown} visible
     } {
       Fl_Button shut {
         label Shutdown
@@ -122,5 +129,34 @@ suspend->labelcolor(color2);
 //can->color(color3);
 //can->labelcolor(color2);
 under_mouse(shutdown_window);} {}
+  }
+  Function {make_window_above(Fl_Window *o)} {open return_type bool
+  } {
+    code {Atom wmStateAbove = XInternAtom( fl_display, "_NET_WM_STATE_ABOVE", 1 );
+if( wmStateAbove == None )
+  return false;
+Atom wmNetWmState = XInternAtom( fl_display, "_NET_WM_STATE", 1 );
+if( wmNetWmState == None )
+  return false;
+
+XClientMessageEvent xclient;
+memset( &xclient, 0, sizeof (xclient) );
+xclient.type = ClientMessage;
+xclient.window = fl_xid(o);
+xclient.message_type = wmNetWmState;
+xclient.format = 32;
+xclient.data.l[0] = 1;//_NET_WM_STATE_ADD;
+xclient.data.l[1] = wmStateAbove;
+xclient.data.l[2] = 0;
+xclient.data.l[3] = 0;
+xclient.data.l[4] = 0;
+Window root = DefaultRootWindow( fl_display );
+XSendEvent( fl_display,
+  root,
+  False,
+  SubstructureRedirectMask | SubstructureNotifyMask,
+  (XEvent *)&xclient );
+return true;} {selected
+    }
   }
 } 

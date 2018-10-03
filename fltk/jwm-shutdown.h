@@ -30,6 +30,8 @@
 #include <string>
 #include <stdlib.h>
 #include <iostream>
+#include <FL/x.H>
+#include <X11/Xlib.h>
 #include "../include/fltkfunctions.hpp"
 #include "../include/jwmrc.hpp"
 #include <FL/Fl_Double_Window.H>
@@ -66,5 +68,6 @@ private:
   static void cb_can(Fl_Button*, void*);
 public:
   void window_bg();
+  bool make_window_above(Fl_Window *o);
 };
 #endif
