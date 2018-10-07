@@ -42,7 +42,7 @@ decl {\#include "../include/common.hpp"} {public global
 decl {\#include "../include/fltkfunctions.hpp"} {public global
 } 
 
-decl {\#include "../include/ui.hpp"} {selected public global
+decl {\#include "../include/ui.hpp"} {public global
 } 
 
 class PopupsUI {open : {public FLTK_FUNCTIONS}
@@ -154,18 +154,17 @@ quit();}
         }
         Fl_Button {} {
           label Notifications
-          callback {dunst_window()->show();}
-          tooltip {Sytem notification pop up windows} xywh {10 190 100 25} box FLAT_BOX color 23 align 128
+          callback {dunst_window()->show();} selected
+          tooltip {System notification pop up windows} xywh {10 190 100 25} box FLAT_BOX color 23 align 128
           code0 {if(!linuxcommon::test_exec("dunst"))o->hide();}
         }
       }
     }
   }
-  Function {dunst_window()} {open
-  } {
+  Function {dunst_window()} {} {
     Fl_Window dunst_win {
       label {System Notifications} open
-      xywh {444 54 545 615} type Double hide
+      xywh {134 89 545 615} type Double hide
       code0 {startup(o);}
       code1 {debug_out("dunst window");} xclass {preferences-system-notifications}
     } {
@@ -687,7 +686,7 @@ if(retval!=0){
   } {
     code {return get_dunst("global",attribute);} {}
   }
-  Function {get_dunst(std::string element, std::string attribute)} {open return_type {std::string}
+  Function {get_dunst(std::string element, std::string attribute)} {return_type {std::string}
   } {
     code {debug_out("get_dunst("+element+","+attribute);
 if(DUNSTCONF.compare("")==0)DUNSTCONF=dunst_config();
@@ -740,8 +739,7 @@ std::transform(tmp.begin(), tmp.end(), tmp.begin(), ::tolower);
 if((tmp.compare("true")==0)||(tmp.compare("yes")==0)){o->value(1);}
 else{o->value(0);}} {}
   }
-  Function {dunst_color(Fl_Widget *o,std::string element,std::string attribute)} {open
-  } {
+  Function {dunst_color(Fl_Widget *o,std::string element,std::string attribute)} {} {
     code {std::string tmp=get_dunst(element,attribute);
 if(tmp.compare("")==0){
   debug_out(element+"->"+attribute+" contained nothing");
@@ -751,7 +749,7 @@ unsigned int color=flCOLOR(tmp);
 o->color(color);
 o->redraw();} {}
   }
-  Function {dunst_config()} {open return_type {std::string}
+  Function {dunst_config()} {return_type {std::string}
   } {
     code {std::string xdg_config=linuxcommon::get_config_dir();
 xdg_config+="dunst/dunstrc";
@@ -766,8 +764,7 @@ return xdg_config;} {}
 std::vector<std::string> myVec=linuxcommon::delimiter_vector_from_string(list,":");
 populateBrowserWithStringVector(icon_folders,myVec);} {}
   }
-  Function {color_picker(Fl_Widget* o)} {open
-  } {
+  Function {color_picker(Fl_Widget* o)} {} {
     code {int retval=0;
 double* color=choose_a_color(retval,o);
 std::string COLORstring=colorToString(color);
@@ -775,8 +772,7 @@ unsigned int COLOR=flCOLOR(COLORstring);
 o->color(COLOR);
 std::cout<<o->color()<<std::endl;} {}
   }
-  Function {make_dunst_conf()} {open
-  } {
+  Function {make_dunst_conf()} {} {
     code {std::string TOTAL="\#DO NOT MANUALLY EDIT\\n[global]";
 TOTAL+=out_val(font,"font",false);
 TOTAL+=bool_val(allow_markup,"allow_markup",false);
@@ -834,7 +830,7 @@ if(!linuxcommon::save_string_to_file(TOTAL,filename)){
   std::cout<<TOTAL<<std::endl;
 }} {}
   }
-  Function {out_val(Fl_Input *o,std::string thing,bool quote)} {open return_type {std::string}
+  Function {out_val(Fl_Input *o,std::string thing,bool quote)} {return_type {std::string}
   } {
     code {std::string tmp;
 if(!InputIsEmpty(o)){

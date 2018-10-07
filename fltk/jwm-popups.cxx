@@ -698,7 +698,7 @@ ay buttons), clock (clocks), menu (menus), pager (pagers), and task (task list\
         o->align(Fl_Align(FL_ALIGN_WRAP));
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(10, 190, 100, 25, gettext("Notifications"));
-        o->tooltip(gettext("Sytem notification pop up windows"));
+        o->tooltip(gettext("System notification pop up windows"));
         o->box(FL_FLAT_BOX);
         o->color((Fl_Color)23);
         o->callback((Fl_Callback*)cb_Notifications);
