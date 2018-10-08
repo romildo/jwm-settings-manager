@@ -2264,7 +2264,7 @@ Fl_Double_Window* WindowUI::make_gtk_theme_window() {
 Fl_Double_Window* WindowUI::make_window() {
   if(!load()){debug_out("DIDN'T LOAD in jwm-window");}
   JWMVERSION=JWMversion();
-  { Fl_Double_Window* o = window_window = new Fl_Double_Window(510, 310, gettext("Window Settings"));
+  { Fl_Double_Window* o = window_window = new Fl_Double_Window(510, 315, gettext("Window Settings"));
     window_window->color(FL_DARK1);
     window_window->user_data((void*)(this));
     { Fl_Scroll* o = new Fl_Scroll(0, 0, 510, 315);
@@ -2743,7 +2743,7 @@ s many program groups can be created as desired."));
             rm_prog->callback((Fl_Callback*)cb_rm_prog);
           } // Fl_Button* rm_prog
           { class_browser = new Fl_Browser(385, 55, 115, 155, gettext("Window Class"));
-            class_browser->tooltip(gettext("Window classes that effected by the options"));
+            class_browser->tooltip(gettext("Window classes that are effected by the options"));
             class_browser->type(2);
             class_browser->box(FL_FLAT_BOX);
             class_browser->align(Fl_Align(FL_ALIGN_TOP));

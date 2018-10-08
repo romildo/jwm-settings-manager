@@ -4124,7 +4124,7 @@ Fl_Double_Window* SettingsUI::make_window() {
       o->callback((Fl_Callback*)cb_Windows);
     } // Fl_Button* o
     { Fl_Button* o = new Fl_Button(90, 175, 80, 80, gettext("Themes"));
-      o->tooltip(gettext("This is for Predefined Thems"));
+      o->tooltip(gettext("This is for Predefined Themes"));
       o->box(FL_FLAT_BOX);
       o->color((Fl_Color)23);
       o->image(image_jsm7);

@@ -42,7 +42,7 @@ decl {\#include "../include/common.hpp"} {public global
 decl {\#include "../data/icons/jwm-settings-manager.xpm"} {public global
 } 
 
-class SettingsUI {open selected : {public FLTK_FUNCTIONS}
+class SettingsUI {open : {public FLTK_FUNCTIONS}
 } {
   decl {JSM_UI ui;} {private local
   }
@@ -99,8 +99,8 @@ ui.showWindow();}
       Fl_Button {} {
         label Themes
         callback {settings_window->hide();
-ui.showThemes();}
-        tooltip {This is for Predefined Thems} image {../data/img/jsm-theme.png} xywh {90 175 80 80} box FLAT_BOX color 23
+ui.showThemes();} selected
+        tooltip {This is for Predefined Themes} image {../data/img/jsm-theme.png} xywh {90 175 80 80} box FLAT_BOX color 23
       }
       Fl_Button {} {
         label Autostart
