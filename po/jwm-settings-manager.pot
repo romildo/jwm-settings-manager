@@ -3196,7 +3196,7 @@ msgid "Windows"
 msgstr ""
 #
 # File: fltk/jwm-settings.cxx, line: 4127
-msgid "This is for Predefined Thems"
+msgid "This is for Predefined Themes"
 msgstr ""
 #
 # File: fltk/jwm-settings.cxx, line: 4133
@@ -3317,6 +3317,7 @@ msgstr ""
 msgid "Choose a layer"
 msgstr ""
 #
+# Maybe replace effects with affects?
 # File: fltk/jwm-window.cxx, line: 1937
 msgid "The layer this option effects"
 msgstr ""
@@ -3741,7 +3742,7 @@ msgid "Window Class"
 msgstr ""
 #
 # File: fltk/jwm-window.cxx, line: 2746
-msgid "Window classes that effected by the options"
+msgid "Window classes that are effected by the options"
 msgstr ""
 #
 # File: fltk/jwm-window.cxx, line: 2752
