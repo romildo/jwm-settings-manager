@@ -1058,12 +1058,13 @@ theme_window->hide();}
       }
     }
   }
-  Function {make_window()} {} {
+  Function {make_window()} {open
+  } {
     code {if(!load()){debug_out("DIDN'T LOAD in jwm-window");}
 JWMVERSION=JWMversion();} {}
     Fl_Window window_window {
-      label {Window Settings}
-      xywh {134 80 510 310} type Double color 47 hide resizable
+      label {Window Settings} open
+      xywh {658 129 510 315} type Double color 47 hide resizable
       code0 {startup(o,jsm_windows_xpm);} xclass {jsm-windows}
     } {
       Fl_Scroll {} {open
@@ -1073,7 +1074,7 @@ JWMVERSION=JWMversion();} {}
           xywh {0 0 510 280} box FLAT_BOX color 45 selection_color 51
         } {
           Fl_Group {} {
-            label Appearance open
+            label Appearance open selected
             xywh {0 30 510 250} selection_color 45
           } {
             Fl_Box {} {
@@ -1382,7 +1383,7 @@ setSnap(d);}
             }
           }
           Fl_Group {} {
-            label Groups
+            label Groups open
             xywh {0 30 510 230} selection_color 45 hide
           } {
             Fl_Browser groups_browser {
@@ -1433,7 +1434,7 @@ populate_groups(groups_browser,opt_browser,class_browser,name_browser);}
             }
             Fl_Browser class_browser {
               label {Window Class}
-              tooltip {Window classes that effected by the options} xywh {385 55 115 155} type Hold box FLAT_BOX align 1
+              tooltip {Window classes that are effected by the options} xywh {385 55 115 155} type Hold box FLAT_BOX align 1
             }
             Fl_Button class_add {
               label {@+}
@@ -1611,7 +1612,7 @@ quit();}
   } {
     Fl_Window action_window {
       label {Window Actions} open
-      xywh {96 393 280 310} type Double hide
+      xywh {730 176 280 310} type Double hide
     } {
       Fl_Scroll {} {open
         xywh {0 0 285 310}
@@ -1744,7 +1745,6 @@ std::string Mask;
 if(!InputIsEmpty(add_mask)){
   Mask=add_mask->value();
 }
-addContext(Action,context,Button,Mask);} {selected
-    }
+addContext(Action,context,Button,Mask);} {}
   }
 } 
