@@ -1,9 +1,11 @@
 [Desktop Entry]
 Name=Font Settings
 Name[en_US]=Font Settings
+Name[pt_PT]=Definições de letras
 GenericName=Configuration Tool
 GenericName[fr]=Outil de configuration
 GenericName[lv]=Konfigurācijas rīks
+GenericName[pt_PT]=Ferramenta de configuração
 Icon=jsm-fonts
 Exec=jwm-settings-manager --font
 Terminal=false

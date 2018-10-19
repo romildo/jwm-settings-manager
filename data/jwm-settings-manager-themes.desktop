@@ -1,9 +1,11 @@
 [Desktop Entry]
 Name=Theme Settings
 Name[en_US]=theme Settings
+Name[pt_PT]=Definições do tema
 GenericName=Configuration Tool
 GenericName[fr]=Outil de configuration
 GenericName[lv]=Konfigurācijas rīks
+GenericName[pt_PT]=Ferramenta de configuração
 Icon=jsm-theme
 Exec=jwm-settings-manager --themes
 Terminal=false

@@ -1,10 +1,13 @@
 [Desktop Entry]
 Type=Application
 Name=Shortcut Editor
+Name[pt_PT]=Editor de atalhos
+GenericName[pt_PT]=Ferramenta de configuração
 Exec=desktop-file-editor %f
 Terminal=false
 Categories=Utility;GTK;
 MimeType=application/x-desktop;
 Comment=Create new or change existing desktop entry
+Comment[pt_PT]=Crie ou edite ficheiros desktop
 Icon=applications-other
 NoDisplay=false
