@@ -1,9 +1,11 @@
 [Desktop Entry]
 Name=Mouse/Touchpad Settings
 Name[en_US]=Mouse/Touchpad Settings
+Name[pt_PT]=Definições do rato/touchpad
 GenericName=Configuration Tool
 GenericName[fr]=Outil de configuration
 GenericName[lv]=Konfigurācijas rīks
+GenericName[pt_PT]=Ferramenta de configuração
 Icon=jsm-mouse
 Exec=fltk-mouse
 Terminal=false

@@ -1,9 +1,11 @@
 [Desktop Entry]
 Name=Icon Settings
 Name[en_US]=Icon Settings
+Name[pt_PT]=Definições de ícones
 GenericName=Configuration Tool
 GenericName[fr]=Outil de configuration
 GenericName[lv]=Konfigurācijas rīks
+GenericName[pt_PT]=Ferramenta de configuração
 Icon=jsm-icons
 Exec=jwm-settings-manager --icons
 Terminal=false

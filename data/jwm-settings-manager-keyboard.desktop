@@ -1,9 +1,11 @@
 [Desktop Entry]
 Name=Keyboard Settings
 Name[en_US]=Keyboard Settings
+Name[pt_PT]=Definições do teclado
 GenericName=Configuration Tool
 GenericName[fr]=Outil de configuration
 GenericName[lv]=Konfigurācijas rīks
+GenericName[pt_PT]=Ferramenta de configuração
 Icon=jsm-keyboard
 Exec=jwm-settings-manager --keyboard
 Terminal=false

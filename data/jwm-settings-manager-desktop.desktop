@@ -2,7 +2,9 @@
 Name=Desktop Settings
 Name[en_US]=Desktop Settings
 Name[en_GB]=Desktop Settings
+Name[pt_PT]=Definições da área de trabalho
 GenericName=Configuration Tool
+GenericName[pt_PT]=Ferramenta de configuração
 Icon=jsm-desktop
 Exec=jwm-settings-manager --desktop
 Terminal=false

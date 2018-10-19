@@ -1,9 +1,11 @@
 [Desktop Entry]
 Name=Startup Program Settings
 Name[en_US]=Startup Program Settings
+Name[pt_PT]=Definições de programas de arranque
 GenericName=Configuration Tool
 GenericName[fr]=Outil de configuration
 GenericName[lv]=Konfigurācijas rīks
+GenericName[pt_PT]=Ferramenta de configuração
 Icon=jsm-autostart
 Exec=jwm-settings-manager --autostart
 Terminal=false
