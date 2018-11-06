@@ -157,15 +157,9 @@ set(JSM_SRCS
 	src/window.cpp
 	${XML_SOURCES}
 )
-## gettext
-# https://cmake.org/cmake/help/v2.8.12/cmake.html#module:FindGettext
-find_package(Gettext)
-if(GETTEXT_FOUND)
-	file (GLOB PO_FILES ${CMAKE_SOURCE_DIR}/po/*.po)
-	message( "msgfmt: ${GETTEXT_MSGFMT_EXECUTABLE}")
-	message( "msgmerge: ${GETTEXT_MSGMERGE_EXECUTABLE}")
-    GETTEXT_CREATE_TRANSLATIONS(po/${PROJECT_NAME}.pot ALL ${PO_FILES})
-endif()
+
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/usr/share/locale DESTINATION share)
+
 ## Turn the source code into a library
 add_library(JSM STATIC ${JSM_SRCS})
 add_subdirectory(data)

@@ -1,9 +1,9 @@
 # data file for the Fltk User Interface Designer (fluid)
-version 1.0303 
-i18n_type 1 
-i18n_include <libintl.h> 
-i18n_function gettext 
-header_name {.h} 
+version 1.0304
+i18n_type 1
+i18n_include <libintl.h>
+i18n_function gettext
+header_name {.h}
 code_name {.cxx}
 comment {/*                 Joe's Window Manager Configuration
  *
@@ -28,31 +28,31 @@ comment {/*                 Joe's Window Manager Configuration
  * You may redistribute this, but you must keep this comment in place
  * Jesus is my Lord, and if you don't like it feel free to ignore it.
  */} {in_source in_header
-} 
+}
 
 decl {\#include <libintl.h>} {public global
-} 
+}
 
 decl {\#include <string>} {public global
-} 
+}
 
 decl {\#include <stdlib.h>} {public global
-} 
+}
 
 decl {\#include <iostream>} {public global
-} 
+}
 
 decl {\#include <FL/x.H>} {public global
-} 
+}
 
 decl {\#include <X11/Xlib.h>} {public global
-} 
+}
 
 decl {\#include "../include/fltkfunctions.hpp"} {public global
-} 
+}
 
 decl {\#include "../include/jwmrc.hpp"} {public global
-} 
+}
 
 class shutdown {open : {public FLTK_FUNCTIONS}
 } {
@@ -64,12 +64,12 @@ class shutdown {open : {public FLTK_FUNCTIONS}
 SUSPEND="torios-suspend||dbus-send --system --print-reply --dest=org.freedesktop.UPower /org/freedesktop/UPower org.freedesktop.UPower.Suspend || systemctl suspend";
 LOGOUT="torios-exit || jwm -exit";
 SHUTDOWN="torios-shutdown || dbus-send --system --print-reply --dest=org.freedesktop.ConsoleKit /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Stop || systemctl poweroff";;
-RESTART="torios-reboot || dbus-send --system --print-reply --dest=org.freedesktop.ConsoleKit /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Restart|| systemctl reboot";} {}
+RESTART="torios-reboot || dbus-send --system --print-reply --dest=org.freedesktop.ConsoleKit /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Restart|| systemctl reboot";
+Fl::add_timeout(0.1,timer_CB,(void*)this);} {}
     Fl_Window shutdown_window {
-      label Shutdown open
+      label Shutdown open selected
       xywh {351 113 242 230} type Double color 45
-      code0 {window_bg();}
-      code1 {if(!make_window_above(o)){std::cerr<<"Couldn't make window work"<<std::endl;}} noborder xclass {system-shutdown} visible
+      code0 {window_bg();} noborder xclass {system-shutdown} visible
     } {
       Fl_Button shut {
         label Shutdown
@@ -130,33 +130,60 @@ suspend->labelcolor(color2);
 //can->labelcolor(color2);
 under_mouse(shutdown_window);} {}
   }
-  Function {make_window_above(Fl_Window *o)} {open return_type bool
+  Function {make_window_above()} {open return_type bool
   } {
     code {Atom wmStateAbove = XInternAtom( fl_display, "_NET_WM_STATE_ABOVE", 1 );
-if( wmStateAbove == None )
+if( wmStateAbove != None )
+{
+  std::cout<<"_NET_WM_STATE_ABOVE has atom of"<<wmStateAbove<<std::endl;
+}
+else
+{
+  std::cout<<"ERROR: cannot find atom for _NET_WM_STATE_ABOVE !"<<std::endl;
   return false;
-Atom wmNetWmState = XInternAtom( fl_display, "_NET_WM_STATE", 1 );
-if( wmNetWmState == None )
-  return false;
+}
 
-XClientMessageEvent xclient;
-memset( &xclient, 0, sizeof (xclient) );
-xclient.type = ClientMessage;
-xclient.window = fl_xid(o);
-xclient.message_type = wmNetWmState;
-xclient.format = 32;
-xclient.data.l[0] = 1;//_NET_WM_STATE_ADD;
-xclient.data.l[1] = wmStateAbove;
-xclient.data.l[2] = 0;
-xclient.data.l[3] = 0;
-xclient.data.l[4] = 0;
-Window root = DefaultRootWindow( fl_display );
-XSendEvent( fl_display,
-  root,
-  False,
-  SubstructureRedirectMask | SubstructureNotifyMask,
-  (XEvent *)&xclient );
-return true;} {selected
-    }
+Atom wmNetWmState = XInternAtom( fl_display, "_NET_WM_STATE", 1 );
+if( wmNetWmState != None )
+{
+  std::cout<<"_NET_WM_STATE has atom of:"<<wmNetWmState<<std::endl;
+}
+else
+{
+  std::cout<<"ERROR: cannot find atom for _NET_WM_STATE !"<<std::endl;
+  return false;
+}
+// set window always on top hint
+if( wmStateAbove != None )
+{
+  XClientMessageEvent xclient;
+  memset( &xclient, 0, sizeof (xclient) );
+  xclient.type = ClientMessage;
+  xclient.window = fl_xid(shutdown_window);
+  xclient.message_type = wmNetWmState; //gdk_x11_get_xatom_by_name_for_display( display, "_NET_WM_STATE" );
+  xclient.format = 32;
+  xclient.data.l[0] = 1; //_NET_WM_STATE_ADD;
+  xclient.data.l[1] = wmStateAbove; //gdk_x11_atom_to_xatom_for_display (display, state1);
+  xclient.data.l[2] = 0; //gdk_x11_atom_to_xatom_for_display (display, state2);
+  xclient.data.l[3] = 0;
+  xclient.data.l[4] = 0;
+    //gdk_wmspec_change_state( FALSE, window,
+    //  gdk_atom_intern_static_string ("_NET_WM_STATE_BELOW"),
+    //  GDK_NONE );
+  XSendEvent(
+    fl_display,
+    DefaultRootWindow( fl_display ),
+    False,
+    SubstructureRedirectMask | SubstructureNotifyMask,
+    (XEvent *)&xclient
+  );
+}
+return true;} {}
   }
-} 
+  Function {timer_CB(void* myclass)} {open return_type {static void}
+  } {
+    code {shutdown *o = (shutdown*)myclass;
+o->make_window_above();
+Fl::repeat_timeout(5,timer_CB,myclass);} {}
+  }
+}
